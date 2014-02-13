@@ -24,6 +24,7 @@
     if (self) {
         // Custom initialization
         
+        [self.navigationController setNavigationBarHidden:YES];
         //login button
         loginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [loginBtn setFrame:CGRectMake(60, (DEVICEHEIGHT/4)*3, 200, 80)];
@@ -53,6 +54,7 @@
     if ([PFUser currentUser] && // Check if a user is cached
         [PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) // Check if user is linked to Facebook
     {
+        NSLog(@"\n FB User already signed in\n");
         // Push the next view controller without animation
         [self.navigationController pushViewController:[[MasterViewController alloc] init] animated:NO];
     }

@@ -7,6 +7,7 @@
 //
 
 #import "MasterViewController.h"
+#import "UMAPIManager.h"
 
 @interface MasterViewController ()
 
@@ -27,7 +28,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    
+    [self.navigationController setNavigationBarHidden:YES];
     //login button
     UIButton *logoutBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [logoutBtn setFrame:CGRectMake(60, 3*DEVICEHEIGHT/4 - DEVICEHEIGHT/10, 200, DEVICEHEIGHT/5)];
@@ -37,7 +38,7 @@
     [logoutBtn.layer setBorderColor:[UIColor blueColor].CGColor];
     [logoutBtn.layer setBorderWidth:3];
     [logoutBtn.layer setCornerRadius:30];
-    [logoutBtn addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
+    [logoutBtn addTarget:self action:@selector(dataDump) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:logoutBtn];
     
     UILabel *helloWorld = [[UILabel alloc] initWithFrame:CGRectMake(0, DEVICEHEIGHT/4 - DEVICEHEIGHT/10, DEVICEWIDTH, DEVICEHEIGHT/5)];
@@ -72,6 +73,16 @@
         }
     }];
     
+}
+
+-(void)dataDump{
+    [UMAPIManager getCampusesWithCompletion:^(NSDictionary *dict) {
+
+        NSLog(@"\n%@\n", dict);
+
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    }];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 
 -(void)logout
