@@ -17,9 +17,13 @@ typedef void (^UMAPIBlock)(NSDictionary *dict);
 @property (nonatomic, strong) NSString *refreshToken;
 
 -(NSString *)getAuthToken;
-+(void)getCampusesWithCompletion:(UMAPIBlock)block;
-+(void)askForAuthToken;
 
++(void)getCoursesWithSchoolCode:(NSString *)code andSubject:(NSString *)subject andCompletion:(UMAPIBlock)block;
++(void)getSubjectsWithSchoolCode:(NSString *)code andCompletion:(UMAPIBlock)block;
++(void)getSchoolsWithCompletion:(UMAPIBlock)block;
++(void)getCampusesWithCompletion:(UMAPIBlock)block;
++(void)askForAuthTokenWithBlock:(void(^)(void))block;
++(void)grabSharedClient;
 
 
 @end

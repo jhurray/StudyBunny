@@ -14,6 +14,8 @@
 #define KEY @"y9FajljRGd7FGreCniY7oAU9T44a"
 #define SECRET @"H6vAEO18J60ZINLKVC2_ZNPaDI8a"
 #define KEYSECRET64 @"eTlGYWpsalJHZDdGR3JlQ25pWTdvQVU5VDQ0YTpINnZBRU8xOEo2MFpJTkxLVkMyX1pOUGFESThh"
+#define WN14 @"1970"
+
 
 // FEATURE HEIGHT CONSTANTS
 #define KEYBOARDHEIGHT 216
@@ -21,11 +23,12 @@
 #define NAVBARHEIGHT 44
 #define DEVICEHEIGHT [[UIScreen mainScreen] bounds].size.height
 #define DEVICEWIDTH [[UIScreen mainScreen] bounds].size.width
+#define BARBUTTONFRAME CGRectMake(0, 0, 30, 30)
 
+// COLORS / FONTS
 
-
-
-// COLORS
-
+#define MAINCOLOR [UIColor colorWithRed:52.0/255.0 green:152.0/255.0 blue:219.0/255.0 alpha:1.0]
+#define SECONDARYCOLOR [UIColor colorWithRed:230.0/255.0 green:126.0/255.0 blue:34.0/255.0 alpha:1.0]
+#define FONT @"MarkerFelt-Wide"
 
 #endif

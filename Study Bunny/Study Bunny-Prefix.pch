@@ -19,5 +19,5 @@
     #import <FacebookSDK/FacebookSDK.h>
     #import <Parse/Parse.h>
     #import "MBProgressHUD.h"
-
+    #import "SBButton.h"
 #endif

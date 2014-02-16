@@ -123,6 +123,15 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 
 #pragma mark - Class methods
 
++ (MB_INSTANCETYPE)showHUDAddedTo:(UIView *)view withText:(NSString *)text{
+    MBProgressHUD *hud = [[self alloc] initWithView:view];
+    hud.labelText = text;
+	[view addSubview:hud];
+	[hud show:YES];
+	return MB_AUTORELEASE(hud);
+    
+}
+
 + (MB_INSTANCETYPE)showHUDAddedTo:(UIView *)view animated:(BOOL)animated {
 	MBProgressHUD *hud = [[self alloc] initWithView:view];
 	[view addSubview:hud];
@@ -457,7 +466,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 	label.opaque = NO;
 	label.backgroundColor = [UIColor clearColor];
 	label.textColor = self.labelColor;
-	label.font = self.labelFont;
+	label.font = [UIFont fontWithName:FONT size:18];
 	label.text = self.labelText;
 	[self addSubview:label];
 	
@@ -629,6 +638,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 	}
 
     // Set background rect color
+    self.color = MAINCOLOR;
     if (self.color) {
         CGContextSetFillColorWithColor(context, self.color.CGColor);
     } else {
