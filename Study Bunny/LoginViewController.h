@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SBButton.h"
 
 @interface LoginViewController : UIViewController
 
-@property (nonatomic, strong) UIButton *loginBtn;
+@property (nonatomic, strong) SBButton *loginBtn;
 
 @end

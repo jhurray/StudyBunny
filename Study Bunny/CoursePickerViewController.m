@@ -14,7 +14,7 @@
 
 @implementation CoursePickerViewController
 
-@synthesize tableView = _tableView, course, titleView, schoolData, classData, subjectData, pickerView;
+@synthesize tableView = _tableView, course, titleView, schoolData, classData, subjectData, pickerView, delegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -22,6 +22,7 @@
     if (self) {
         // Custom initialization
         course = [[Course alloc] init];
+        course.delegate = self;
     }
     return self;
 }
@@ -71,7 +72,7 @@
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVBARHEIGHT+STATUSBARHEIGHT+pickerViewHeight, DEVICEWIDTH, DEVICEHEIGHT-NAVBARHEIGHT-STATUSBARHEIGHT-pickerViewHeight) style:UITableViewStylePlain];
     [_tableView setBackgroundColor:[UIColor whiteColor]];
     [_tableView setAlpha:0.9];
-    [_tableView setTintColor:[UIColor greenColor]];
+    [_tableView setTintColor:SECONDARYCOLOR];
     [_tableView setDataSource:self];
     [_tableView setDelegate:self];
     [self.view addSubview:_tableView];
@@ -103,27 +104,38 @@
     pickerView.step = [pickerView.picker selectedSegmentIndex];
     [_tableView reloadData];
     
-    /*
+    
     switch ([pickerView.picker selectedSegmentIndex]) {
         case 0:
-            
+            [titleView setText:@"Choose Your School"];
             break;
         case 1:
-            
+            [titleView setText:@"Choose Your Subject"];
             break;
         case 2:
-            
+            [titleView setText:@"Choose Your Course"];
             break;
             
         default:
             break;
     }
-     */
+    
 }
 
 -(void)save
 {
+    if( !(course.description &&course.catalogNum)){
+        //alert view bitch
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Oops!"]
+                                                        message:@"Please choose a school, subject, and class..."
+                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alert show];
+        return;
+    }
     
+    [course saveToParse];
+    [MBProgressHUD showHUDAddedTo:self.view withText:@"Saving Course..."];
+    [delegate didAddNewCourse:self.course];
 }
 
 -(void)cancel
@@ -131,6 +143,30 @@
     [self dismissViewControllerAnimated:YES completion:^{
         
     }];
+}
+
+// ------------------------------------------ COURSE DELEGATE METHODS ---------------------------------//
+
+-(void)course:(Course *)course finishedSavingWithError:(NSError *)error
+{
+    if (error) {
+        NSLog(@"An error occured: %@", error.localizedDescription);
+        //alert view mofucka
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops!"
+                                                        message:@"An error occured. Please try again."
+                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alert show];
+        return;
+    }
+    
+    // otherwise kill the progress hud and resign
+    [MBProgressHUD HUDForView:self.view].labelText = @"Success!";
+    double delayInSeconds = 0.3;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self dismissViewControllerAnimated:YES completion:nil];
+    });
+    
 }
 
 // ------------------------------------------ TABLE VIEW DELEGATE METHODS ---------------------------------//
@@ -154,6 +190,7 @@
                 }
                 NSLog(@"%@", subjectData);
                 [pickerView.picker setSelectedSegmentIndex:pickerView.step];
+                [titleView setText:@"Choose Your Subject"];
                 [tableView reloadData];
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
             }];
@@ -169,6 +206,7 @@
                 classData = [dict objectForKey:@"ClassOffered"];
                 NSLog(@"%@", classData);
                 [pickerView.picker setSelectedSegmentIndex:pickerView.step];
+                [titleView setText:@"Choose Your Course"];
                 [tableView reloadData];
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
             }];
@@ -205,7 +243,29 @@
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [cell setTintColor:SECONDARYCOLOR];
+    //1. Setup the CATransform3D structure
+    CATransform3D rotation;
+    rotation = CATransform3DMakeRotation( (90.0*M_PI)/180, 1.0, 0.0, 0.0);
+    //rotation = CATransform3DMakeTranslation(30, 0, 0);
+    rotation.m34 = 1.0/ -600;
+    
+    
+    //2. Define the initial state (Before the animation)
+    cell.layer.shadowColor = MAINCOLOR.CGColor;
+    cell.layer.shadowOffset = CGSizeMake(10, 10);
+    cell.alpha = 0.7;
+    
+    cell.layer.transform = rotation;
+    cell.layer.anchorPoint = CGPointMake(0.5, 0.5);
+    
+    
+    //3. Define the final state (After the animation) and commit the animation
+    [UIView beginAnimations:@"rotation.x" context:NULL];
+    [UIView setAnimationDuration:0.4];
+    cell.layer.transform = CATransform3DIdentity;
+    cell.alpha = 1;
+    cell.layer.shadowOffset = CGSizeMake(0, 0);
+    [UIView commitAnimations];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

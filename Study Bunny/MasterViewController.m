@@ -8,7 +8,8 @@
 
 #import "MasterViewController.h"
 #import "UMAPIManager.h"
-#import "CoursePickerViewController.h"
+#import "MyCoursesViewController.h"
+#import "MapViewController.h"
 
 @interface MasterViewController ()
 
@@ -30,13 +31,16 @@
     
     [super viewDidLoad];
     
+    //set up singletons
     [UMAPIManager grabSharedClient];
+    [[LocationGetter sharedInstance] startUpdates];
     
 	// Do any additional setup after loading the view.
     self.navigationItem.hidesBackButton = YES;
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [self.navigationController.navigationBar setBarTintColor:SECONDARYCOLOR];
     [self.navigationController.navigationBar setTranslucent:YES];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
    
     UILabel *titleView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, NAVBARHEIGHT)];
     [titleView setBackgroundColor:[UIColor clearColor]];
@@ -83,13 +87,14 @@
     
     CGFloat buttonHeight = 50;
     CGFloat buttonOffset = 70;
-    SBButton *addCourse = [[SBButton alloc] initWithFrame:CGRectMake(60, 3*DEVICEHEIGHT/5, 200, buttonHeight)];
-    [addCourse setTitle:@"Add New Course" forState:UIControlStateNormal];
-    [addCourse addTarget:self action:@selector(addNewCourse) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:addCourse];
+    SBButton *studyNow = [[SBButton alloc] initWithFrame:CGRectMake(60, 3*DEVICEHEIGHT/5, 200, buttonHeight)];
+    [studyNow setTitle:@"Study Now" forState:UIControlStateNormal];
+    [studyNow addTarget:self action:@selector(studyNow) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:studyNow];
     
     SBButton *myCourses = [[SBButton alloc] initWithFrame:CGRectMake(60, 3*DEVICEHEIGHT/5+buttonOffset, 200, buttonHeight)];
     [myCourses setTitle:@"My Courses" forState:UIControlStateNormal];
+    [myCourses addTarget:self action:@selector(seeMyCourses) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:myCourses];
     
     SBButton *logout = [[SBButton alloc] initWithFrame:CGRectMake(60, 3*DEVICEHEIGHT/5+2*buttonOffset, 200, buttonHeight)];
@@ -121,19 +126,15 @@
     
 }
 
--(void)addNewCourse{
-    [self.navigationController presentViewController:[[UINavigationController alloc] initWithRootViewController:[[CoursePickerViewController alloc] init]] animated:YES completion:nil];
+-(void)studyNow{
+    [self.navigationController pushViewController:[[MapViewController alloc] initWithNibName:nil bundle:nil] animated:NO];
 }
 
--(void)dataDump{
-    [UMAPIManager getCampusesWithCompletion:^(NSDictionary *dict) {
-
-        NSLog(@"\n%@\n", dict);
-
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    }];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+-(void)seeMyCourses
+{
+    [self.navigationController pushViewController:[[MyCoursesViewController alloc] init] animated:NO];
 }
+
 
 -(void)logout
 {

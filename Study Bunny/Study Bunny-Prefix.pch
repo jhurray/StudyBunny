@@ -20,4 +20,5 @@
     #import <Parse/Parse.h>
     #import "MBProgressHUD.h"
     #import "SBButton.h"
+    #import "LocationGetter.h"
 #endif

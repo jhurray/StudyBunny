@@ -14,6 +14,9 @@
 		380E59CD18AEC97B00F18AEB /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = 380E59CB18AEC97A00F18AEB /* check.png */; };
 		380E59CE18AEC97B00F18AEB /* cross.png in Resources */ = {isa = PBXBuildFile; fileRef = 380E59CC18AEC97B00F18AEB /* cross.png */; };
 		380E59D118AECC6900F18AEB /* CoursePickerSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 380E59D018AECC6900F18AEB /* CoursePickerSegmentView.m */; };
+		380E59D418B2FA8600F18AEB /* MyCoursesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 380E59D318B2FA8600F18AEB /* MyCoursesViewController.m */; };
+		380E59D718B3C1B400F18AEB /* LocationGetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 380E59D618B3C1B400F18AEB /* LocationGetter.m */; };
+		380E59DA18B670E500F18AEB /* CourseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 380E59D918B670E500F18AEB /* CourseTableViewCell.m */; };
 		385E80B6189EE8F300E9766D /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 385E80B5189EE8F300E9766D /* FacebookSDK.framework */; };
 		385E80BB189EE92000E9766D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 385E80BA189EE92000E9766D /* MBProgressHUD.m */; };
 		38BF3E4418AC526400C96105 /* UMAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BF3E4318AC526400C96105 /* UMAPIManager.m */; };
@@ -68,6 +71,12 @@
 		380E59CC18AEC97B00F18AEB /* cross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cross.png; sourceTree = "<group>"; };
 		380E59CF18AECC6900F18AEB /* CoursePickerSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoursePickerSegmentView.h; sourceTree = "<group>"; };
 		380E59D018AECC6900F18AEB /* CoursePickerSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoursePickerSegmentView.m; sourceTree = "<group>"; };
+		380E59D218B2FA8500F18AEB /* MyCoursesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCoursesViewController.h; sourceTree = "<group>"; };
+		380E59D318B2FA8600F18AEB /* MyCoursesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCoursesViewController.m; sourceTree = "<group>"; };
+		380E59D518B3C1B400F18AEB /* LocationGetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationGetter.h; sourceTree = "<group>"; };
+		380E59D618B3C1B400F18AEB /* LocationGetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationGetter.m; sourceTree = "<group>"; };
+		380E59D818B670E500F18AEB /* CourseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CourseTableViewCell.h; sourceTree = "<group>"; };
+		380E59D918B670E500F18AEB /* CourseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseTableViewCell.m; sourceTree = "<group>"; };
 		385E80B5189EE8F300E9766D /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		385E80B9189EE92000E9766D /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		385E80BA189EE92000E9766D /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
@@ -249,6 +258,10 @@
 				380E59C418ADDE3500F18AEB /* SBButton.m */,
 				380E59CF18AECC6900F18AEB /* CoursePickerSegmentView.h */,
 				380E59D018AECC6900F18AEB /* CoursePickerSegmentView.m */,
+				380E59D518B3C1B400F18AEB /* LocationGetter.h */,
+				380E59D618B3C1B400F18AEB /* LocationGetter.m */,
+				380E59D818B670E500F18AEB /* CourseTableViewCell.h */,
+				380E59D918B670E500F18AEB /* CourseTableViewCell.m */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -264,6 +277,8 @@
 				38D2D7CE189DBA73003FF499 /* MapViewController.m */,
 				380E59C818ADEA2B00F18AEB /* CoursePickerViewController.h */,
 				380E59C918ADEA2B00F18AEB /* CoursePickerViewController.m */,
+				380E59D218B2FA8500F18AEB /* MyCoursesViewController.h */,
+				380E59D318B2FA8600F18AEB /* MyCoursesViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -379,10 +394,13 @@
 				380E59CA18ADEA2B00F18AEB /* CoursePickerViewController.m in Sources */,
 				385E80BB189EE92000E9766D /* MBProgressHUD.m in Sources */,
 				38D2D7A3189DB62E003FF499 /* AppDelegate.m in Sources */,
+				380E59D418B2FA8600F18AEB /* MyCoursesViewController.m in Sources */,
+				380E59DA18B670E500F18AEB /* CourseTableViewCell.m in Sources */,
 				38D2D7CF189DBA73003FF499 /* MapViewController.m in Sources */,
 				380E59C218ADD2DE00F18AEB /* Course.m in Sources */,
 				38D2D79F189DB62E003FF499 /* main.m in Sources */,
 				38D2D7C9189DBA42003FF499 /* LoginViewController.m in Sources */,
+				380E59D718B3C1B400F18AEB /* LocationGetter.m in Sources */,
 				38BF3E4418AC526400C96105 /* UMAPIManager.m in Sources */,
 				380E59C518ADDE3500F18AEB /* SBButton.m in Sources */,
 			);

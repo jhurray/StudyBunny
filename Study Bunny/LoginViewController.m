@@ -26,14 +26,8 @@
         
         [self.navigationController setNavigationBarHidden:YES];
         //login button
-        loginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [loginBtn setFrame:CGRectMake(60, (DEVICEHEIGHT/4)*3, 200, 80)];
-        [loginBtn setBackgroundColor:[UIColor clearColor]];
+        loginBtn = [[SBButton alloc] initWithFrame:CGRectMake(30, (DEVICEHEIGHT/4)*3, 260, 70)];
         [loginBtn setTitle:@"Login with Facebook" forState:UIControlStateNormal];
-        [loginBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-        [loginBtn.layer setBorderColor:[UIColor blueColor].CGColor];
-        [loginBtn.layer setBorderWidth:3];
-        [loginBtn.layer setCornerRadius:30];
         [loginBtn addTarget:self action:@selector(loginWithFacebook) forControlEvents:UIControlEventTouchUpInside];
         
     }
@@ -44,7 +38,32 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    [self.navigationController setNavigationBarHidden:YES];
     
+    
+    [self.view setBackgroundColor:MAINCOLOR];
+    
+    UILabel *prompt = [[UILabel alloc] initWithFrame:CGRectMake(15, DEVICEHEIGHT/10, DEVICEWIDTH-30, DEVICEHEIGHT/12)];
+    [prompt setText:[NSString stringWithFormat:@"Study Bunny"]];
+    [prompt setTextAlignment:NSTextAlignmentCenter];
+    [prompt setTextColor:[UIColor whiteColor]];
+    [prompt setFont:[UIFont fontWithName:FONT size:48.0]];
+    [prompt setBackgroundColor:[UIColor clearColor]];
+    [prompt setAdjustsFontSizeToFitWidth:YES];
+    [self.view addSubview:prompt];
+    
+    CGFloat bunnyFrame = 195;
+    UIView *orangeCircle = [[UIView alloc] initWithFrame:CGRectMake((DEVICEWIDTH-bunnyFrame)/2, DEVICEHEIGHT/3-15, bunnyFrame, bunnyFrame)];
+    [orangeCircle setBackgroundColor:SECONDARYCOLOR];
+    [orangeCircle.layer setCornerRadius:bunnyFrame/2];
+    [self.view addSubview:orangeCircle];
+    
+    CGFloat bunnyImgFrame = 140;
+    UIImageView *bunny = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, bunnyImgFrame, bunnyImgFrame)];
+    [bunny setCenter:orangeCircle.center];
+    UIImage *bunnyImg = [UIImage imageNamed:@"bunny.png"];
+    [bunny setImage:[self changeImage:bunnyImg toColor:[UIColor whiteColor]]];
+    [self.view addSubview:bunny];
     
     // add all subviews
     [self.view addSubview:loginBtn];
@@ -59,6 +78,11 @@
         [self.navigationController pushViewController:[[MasterViewController alloc] init] animated:NO];
     }
     
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:YES];
 }
 
 -(void)loginWithFacebook{
@@ -109,13 +133,29 @@
             [self.navigationController pushViewController:[[MasterViewController alloc] init] animated:NO];
         }
     }];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:self.view withText:@"Logging in..."];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(UIImage *)changeImage:(UIImage *)image toColor:(UIColor *)color
+{
+    CGRect rect = CGRectMake(0, 0, 140, 140);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextClipToMask(context, rect, image.CGImage);
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    UIImage *flippedImage = [UIImage imageWithCGImage:img.CGImage
+                                                scale:1.0 orientation: UIImageOrientationDownMirrored];
+    return flippedImage;
 }
 
 @end

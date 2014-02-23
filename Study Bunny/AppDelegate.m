@@ -16,6 +16,8 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
+    deathRow = [NSMutableArray array];
+    
     //Parse Setup With Facebook
     [Parse setApplicationId:@"bKQoTiPsyDsPZsjO87cHV3DK5MeZI3c5V8AlasFK"
                   clientKey:@"SiOjnC0i1RtMT2YAeoCK6ctjDtJNhbdbxd2Z9zXm"];

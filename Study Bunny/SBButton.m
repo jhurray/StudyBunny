@@ -19,9 +19,10 @@
         [self setBackgroundColor:[UIColor clearColor]];
         [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.titleLabel setFont:[UIFont fontWithName:FONT size:24.0]];
+        [self.titleLabel setAdjustsFontSizeToFitWidth:YES];
         [self.layer setBorderColor:[UIColor whiteColor].CGColor];
-        [self.layer setBorderWidth:3];
-        [self.layer setCornerRadius:23];
+        [self.layer setBorderWidth:1];
+        [self.layer setCornerRadius:10];
         [self addTarget:self action:@selector(highlight) forControlEvents:UIControlEventTouchDown];
         [self addTarget:self action:@selector(unhighlight) forControlEvents:UIControlEventTouchUpInside];
         [self addTarget:self action:@selector(unhighlight) forControlEvents:UIControlEventTouchDragOutside];

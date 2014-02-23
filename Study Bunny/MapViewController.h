@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 
-@interface MapViewController : UIViewController
+@interface MapViewController : UIViewController <MKMapViewDelegate>
+
+@property (nonatomic, strong) UILabel *titleView;
+@property (nonatomic, strong) MKMapView *map;
+@property (nonatomic, strong) NSMutableArray *matches;
+@property (nonatomic) CGFloat currentMapDist;
+@property (nonatomic, strong) NSArray *myCourses;
 
 @end
