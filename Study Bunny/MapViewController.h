@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import "SBMatchMaker.h"
 
-@interface MapViewController : UIViewController <MKMapViewDelegate>
+@interface MapViewController : UIViewController <MKMapViewDelegate, SBMatchMakerDelegate>
 
 @property (nonatomic, strong) UILabel *titleView;
 @property (nonatomic, strong) MKMapView *map;

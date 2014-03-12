@@ -9,7 +9,7 @@
 #import "Course.h"
 
 @implementation Course
-@synthesize subject, subjectCode, school, schoolCode, description, catalogNum, delegate, parseId, editMode;
+@synthesize subject, subjectCode, school, schoolCode, description, catalogNum, delegate, parseId, editMode, owner;
 
 -(id)initWithPFObject:(PFObject *)course{
     
@@ -20,6 +20,7 @@
         schoolCode = [course objectForKey:@"schoolCode"];
         catalogNum = [course objectForKey:@"catalogNum"];
         description = [course objectForKey:@"description"];
+        owner = [course objectForKey:@"owner"];
         parseId = [course objectId];
         editMode = FALSE;
     }

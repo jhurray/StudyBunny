@@ -27,9 +27,11 @@
 @property (nonatomic, strong) NSString *catalogNum;
 @property (nonatomic, strong) NSString *description;
 @property (nonatomic, strong) NSString *parseId;
+@property (nonatomic, strong) NSString *owner;
 @property (nonatomic) BOOL isNew;
 @property (nonatomic) BOOL editMode;
 
+-(id)initWithPFObject:(PFObject *)course;
 -(void)saveToParse;
 -(void)deleteFromParse;
 +(void)getMyCoursesWithCompletion:(void(^)(NSArray *courses))completion;

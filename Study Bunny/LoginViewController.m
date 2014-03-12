@@ -16,7 +16,7 @@
 
 @implementation LoginViewController
 
-@synthesize loginBtn;
+@synthesize loginBtn, phoneInput, bunnyCircle, bunny, done;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -52,22 +52,40 @@
     [prompt setAdjustsFontSizeToFitWidth:YES];
     [self.view addSubview:prompt];
     
+    CGFloat promptBottom = prompt.frame.origin.y + prompt.frame.size.height;
+    CGFloat inputMiddle = (DEVICEHEIGHT-promptBottom-KEYBOARDHEIGHT)/2 + promptBottom;
+    CGFloat inputHeight = DEVICEHEIGHT/9;
+    phoneInput = [[SBTextField alloc] initWithFrame:CGRectMake(0, inputMiddle-inputHeight, DEVICEWIDTH, inputHeight)];
+    [phoneInput setDelegate:self];
+    [phoneInput setText:@"Please enter your phone number"];
+    [phoneInput setAlpha:0];
+    [phoneInput setKeyboardType:UIKeyboardTypeDecimalPad];
+    [phoneInput setReturnKeyType:UIReturnKeyDone];
+    [self.view addSubview:phoneInput];
+    
+    CGFloat inputBottom = phoneInput.frame.origin.y + phoneInput.frame.size.height;
+    CGFloat doneMiddle = (DEVICEHEIGHT-inputBottom-KEYBOARDHEIGHT)/2 + inputBottom;
+    CGFloat doneHeight = DEVICEHEIGHT/13;
+    done = [[SBButton alloc] initWithFrame:CGRectMake(110, doneMiddle-doneHeight/2, DEVICEWIDTH-220, doneHeight)];
+    [done setTitle:@"Done" forState:UIControlStateNormal];
+    [done addTarget:self  action:@selector(animateReversePhoneInput) forControlEvents:UIControlEventTouchUpInside];
+    [done setAlpha:0];
+    
     CGFloat bunnyFrame = 195;
-    UIView *orangeCircle = [[UIView alloc] initWithFrame:CGRectMake((DEVICEWIDTH-bunnyFrame)/2, DEVICEHEIGHT/3-15, bunnyFrame, bunnyFrame)];
-    [orangeCircle setBackgroundColor:SECONDARYCOLOR];
-    [orangeCircle.layer setCornerRadius:bunnyFrame/2];
-    [self.view addSubview:orangeCircle];
+    bunnyCircle = [[UIView alloc] initWithFrame:CGRectMake((DEVICEWIDTH-bunnyFrame)/2, DEVICEHEIGHT/3-15, bunnyFrame, bunnyFrame)];
+    [bunnyCircle setBackgroundColor:SECONDARYCOLOR];
+    [bunnyCircle.layer setCornerRadius:bunnyFrame/2];
+    [self.view addSubview:bunnyCircle];
     
     CGFloat bunnyImgFrame = 140;
-    UIImageView *bunny = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, bunnyImgFrame, bunnyImgFrame)];
-    [bunny setCenter:orangeCircle.center];
+    bunny = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, bunnyImgFrame, bunnyImgFrame)];
+    [bunny setCenter:bunnyCircle.center];
     UIImage *bunnyImg = [UIImage imageNamed:@"bunny.png"];
     [bunny setImage:[self changeImage:bunnyImg toColor:[UIColor whiteColor]]];
     [self.view addSubview:bunny];
     
     // add all subviews
     [self.view addSubview:loginBtn];
-    
     
     // bypass login screen if user is already cached
     if ([PFUser currentUser] && // Check if a user is cached
@@ -96,44 +114,178 @@
             if (!error) {
                 NSLog(@"Uh oh. The user cancelled the Facebook login.");
             } else {
-                NSLog(@"Uh oh. An error occurred: %@", error);
+                NSLog(@"Uh oh. An error occurred: \n\n%@", error);
             }
         } else if (user.isNew) {
             NSLog(@"User with facebook signed up and logged in!");
             
             //adding a column to user table
-            [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-                NSLog(@"Facebook request started!\n" );
-                if (!error) {
-                    
-                    [PFUser currentUser][@"facebook_id"] = @"blah";
-                    [[PFUser currentUser] setObject:[result objectForKey:@"id"] forKey:@"facebook_id"];
-                    
-                    [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                        if(succeeded){
-                            NSLog(@"successful save!!");
-                            [MBProgressHUD hideHUDForView:self.view animated:YES];
-                            [self.navigationController pushViewController:[[MasterViewController alloc] init] animated:NO];
-                        }
-                        else{
-                            NSLog(@"%@", [error localizedDescription]);
-                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                            message:@"Something went wrong"
-                                                                           delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                            [alert show];
-                        }
-                    }];
-                    
-                }
-            }];
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [self animatePhoneInput];
 
         } else {
+            
             NSLog(@"User with facebook logged in!");
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             [self.navigationController pushViewController:[[MasterViewController alloc] init] animated:NO];
+
         }
     }];
     [MBProgressHUD showHUDAddedTo:self.view withText:@"Logging in..."];
+}
+
+-(void)animateDoneBtn
+{
+    [self.view addSubview:done];
+    [UIView animateWithDuration:0.5 delay:0
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         [done setAlpha:1.0];
+                         
+                     } completion:^(BOOL finished) {
+                         
+                     }];
+}
+
+-(void)animateReversePhoneInput
+{
+    [UIView animateWithDuration:0.4 delay:0
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         [phoneInput setAlpha:0.0];
+                         [done setAlpha:0];
+                     } completion:^(BOOL finished) {
+                         [phoneInput removeFromSuperview];
+                         [done removeFromSuperview];
+                         [phoneInput resignFirstResponder];
+                         [UIView animateWithDuration:0.4 delay:0
+                                             options:UIViewAnimationOptionBeginFromCurrentState
+                                          animations:^{
+                                              
+                                              [bunnyCircle setAlpha:1.0];
+                                              [bunny setAlpha:1.0];
+                                              
+                                          } completion:^(BOOL finished) {
+                                              [self getNewUserFacebookInfoWithPhoneNumber:phoneInput.text];
+                                          }];
+                     }];
+}
+
+-(void)animatePhoneInput
+{
+    [UIView animateWithDuration:0.4 delay:0
+                    options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         [bunnyCircle setAlpha:0];
+                         [bunny setAlpha:0];
+                         
+                     } completion:^(BOOL finished) {
+                         if (![self.view.subviews containsObject:phoneInput]) {
+                             [phoneInput setText:@"Please enter your phone number"];
+                             [self.view addSubview:phoneInput];
+                         }
+                         [phoneInput becomeFirstResponder];
+                         [UIView animateWithDuration:0.4 delay:0
+                                             options:UIViewAnimationOptionBeginFromCurrentState
+                                          animations:^{
+                                              [phoneInput setAlpha:0.8];
+                                              
+                                          } completion:^(BOOL finished) {
+                                              
+                                          }];
+                     }];
+}
+
+-(void)getNewUserFacebookInfoWithPhoneNumber:(NSString *)phoneNum
+{
+    [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        NSLog(@"Facebook request started!\n" );
+        if (!error) {
+            
+            [PFUser currentUser][@"facebook_id"] = @"blah";
+            [PFUser currentUser][@"phoneNumber"] = @"blah";
+            [[PFUser currentUser] setObject:[result objectForKey:@"id"] forKey:@"facebook_id"];
+            [[PFUser currentUser] setObject:phoneNum forKey:@"phoneNumber"];
+            
+            [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if(succeeded){
+                    NSLog(@"successful save!!");
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+                    [self.navigationController pushViewController:[[MasterViewController alloc] init] animated:NO];
+                }
+                else{
+                    NSLog(@"%@", [error localizedDescription]);
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                    message:@"Something went wrong"
+                                                                   delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alert show];
+                }
+            }];
+            
+        }
+    }];
+    [MBProgressHUD showHUDAddedTo:self.view withText:@"Finishing Login..."];
+}
+
+// ********************************************** TEXT FIELD DELEGATE METHODS ****************************************************//
+
+
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    /*
+    if([textField.text isEqualToString:@"  Please enter your phone number  "]){
+        [textField setTextColor:MAINCOLOR];
+        [textField setText:@""];
+    }
+     */
+}
+
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    NSLog(@"ending yeee");
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if([textField.text isEqualToString:@"Please enter your phone number"] || [textField.text isEqualToString:@""] ){
+        return NO;
+    }
+    [textField resignFirstResponder];
+    return YES;
+}
+
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    
+    NSUInteger futureLength = [textField.text length]+1;
+    if (futureLength > 12) {
+        // to get rid of the prompt
+        textField.text = @"";
+        [textField setTextColor:MAINCOLOR];
+        return YES;
+    }
+    if (futureLength == 11 && ![string isEqualToString:@""]) {
+        // to prevent more than 10 digits
+        return NO;
+    }
+    if(futureLength >= 10){
+        // for backspaces
+        if ([string isEqualToString:@""]) {
+            [done setAlpha:0];
+            [done removeFromSuperview];
+            return YES;
+        }
+        // for being done
+        if(![self.view.subviews containsObject:done]){
+            [self animateDoneBtn];
+        }
+        return YES;
+    }
+    else{
+        
+        return YES;
+    }
 }
 
 - (void)didReceiveMemoryWarning

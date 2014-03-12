@@ -22,7 +22,7 @@
         [self.titleLabel setAdjustsFontSizeToFitWidth:YES];
         [self.layer setBorderColor:[UIColor whiteColor].CGColor];
         [self.layer setBorderWidth:1];
-        [self.layer setCornerRadius:10];
+        [self.layer setCornerRadius:frame.size.height/5];
         [self addTarget:self action:@selector(highlight) forControlEvents:UIControlEventTouchDown];
         [self addTarget:self action:@selector(unhighlight) forControlEvents:UIControlEventTouchUpInside];
         [self addTarget:self action:@selector(unhighlight) forControlEvents:UIControlEventTouchDragOutside];

@@ -56,25 +56,66 @@
     [map setDelegate:self];
     [self.view addSubview:map];
     
+    SBMatchMaker *sbMM = [[SBMatchMaker alloc] init];
+    [sbMM setDelegate:self];
+    [sbMM getMatches];
+    
+    /*
     [Course getMyCoursesWithCompletion:^(NSArray *courses) {
         myCourses = courses;
-        [self getStudyMatchesForCourse:courses[0]];
+        NSMutableArray *subjectCodes = [NSMutableArray array];
+        NSMutableArray *catalogNumbers = [NSMutableArray array];
+        for (Course *c in courses) {
+            [subjectCodes addObject:c.subjectCode];
+            [catalogNumbers addObject:c.catalogNum];
+        }
+        [self getStudyMatchesForSubjectCodes:subjectCodes andCatalogNums:catalogNumbers];
+        
     }];
+    */
+     
     [MBProgressHUD showHUDAddedTo:self.view withText:@"Loading Courses"];
 }
+
+// ------------------------------------- SBMATCHMAKER DELEGATE -----------------------------------------------------//
+
+-(void)matchesMade:(SBMatchMaker *)matchMaker WithError:(NSError *)error
+{
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    if (error) {
+        NSLog(@"Error in MacthesMadeWithError: %@\n", error.localizedDescription);
+        
+        // alert view here
+        
+        return;
+    }
+    myCourses = matchMaker.myCourses;
+    NSLog(@"Mapped dictionary is \n%@\n", matchMaker.usersMappedToCourses);
+    
+}
+
 
 // ------------------------------------- SELECTOR FUNCS -----------------------------------------------------//
 
 
--(void)getStudyMatchesForCourse:(Course *)course
+-(void)getStudyMatchesForSubjectCodes:(NSArray *)subCodes andCatalogNums:(NSArray *)catNums
 {
     MBProgressHUD *hud = [MBProgressHUD HUDForView:self.view];
     [hud setLabelText:@"Finding Study Partners..."];
     PFQuery *q = [PFQuery queryWithClassName:@"Course"];
-    [q whereKey:@"subjectCode" equalTo:course.subjectCode];
-    [q whereKey:@"catalogNum" equalTo:course.catalogNum];
+    [q whereKey:@"subjectCode" containedIn:subCodes];
+    [q whereKey:@"catalogNum" containedIn:catNums];
+    [q whereKey:@"owner" notEqualTo:[PFUser currentUser].objectId];
     [q findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
        // do user query and push that shit into Matches
+        if (error) {
+            NSLog(@"An error occured: %@", error.localizedDescription);
+            return;
+        }
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        NSLog(@"DONE WITH QUERY\n");
+        NSLog(@"objects are: \n\n%@\n", objects);
+        
     }];
 }
 

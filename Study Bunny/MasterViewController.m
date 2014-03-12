@@ -63,7 +63,7 @@
     [helloWorld setAdjustsFontSizeToFitWidth:YES];
     [self.view addSubview:helloWorld];
     
-    UILabel *prompt = [[UILabel alloc] initWithFrame:CGRectMake(15, DEVICEHEIGHT/8 + DEVICEHEIGHT/12, DEVICEWIDTH-30, DEVICEHEIGHT/12)];
+    UILabel *prompt = [[UILabel alloc] initWithFrame:CGRectMake(15, DEVICEHEIGHT/8 + DEVICEHEIGHT/12-10, DEVICEWIDTH-30, DEVICEHEIGHT/12)];
     [prompt setText:[NSString stringWithFormat:@"Ready to Study?"]];
     [prompt setTextAlignment:NSTextAlignmentCenter];
     [prompt setTextColor:[UIColor whiteColor]];
@@ -73,7 +73,7 @@
     [self.view addSubview:prompt];
     
     CGFloat bunnyFrame = 145;
-    UIView *orangeCircle = [[UIView alloc] initWithFrame:CGRectMake((DEVICEWIDTH-bunnyFrame)/2, DEVICEHEIGHT/3-15, bunnyFrame, bunnyFrame)];
+    UIView *orangeCircle = [[UIView alloc] initWithFrame:CGRectMake((DEVICEWIDTH-bunnyFrame)/2, DEVICEHEIGHT/3-20, bunnyFrame, bunnyFrame)];
     [orangeCircle setBackgroundColor:SECONDARYCOLOR];
     [orangeCircle.layer setCornerRadius:bunnyFrame/2];
     [self.view addSubview:orangeCircle];
