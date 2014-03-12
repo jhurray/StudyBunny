@@ -28,6 +28,18 @@
     // set Login as root VC
     [self.window setRootViewController:[[UINavigationController alloc] initWithRootViewController:[[LoginViewController alloc] init]]];
     
+    
+    [[PFUser currentUser] setObject:[NSNumber numberWithBool:YES] forKey:@"online"];
+    [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (error) {
+            NSLog(@"error with user_is_ONLINE save... %@\n", error.localizedDescription);
+            [[PFUser currentUser] setObject:[NSNumber numberWithBool:YES] forKey:@"online"];
+            [[PFUser currentUser] saveEventually];
+        }
+        NSLog(@"Succesful user_is_ONLINE save!!");
+    }];
+    
+    
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -68,7 +80,18 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+    NSLog(@"APPLICATION IS TERMINATING!!!!");
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    
+    // set user to offline and close the fb session
+    [[PFUser currentUser] setObject:[NSNumber numberWithBool:NO] forKey:@"online"];
+    [[PFUser currentUser] save];
+    /*
+     
+     IF this  ^^^^  isnt Working: save offline when user enters background then save online when they enter foreground
+     
+     */
+    
     [FBSession.activeSession close];
 }
 

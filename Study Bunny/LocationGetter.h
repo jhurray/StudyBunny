@@ -22,11 +22,12 @@
 @interface LocationGetter : NSObject <CLLocationManagerDelegate>
 
 @property (nonatomic, retain) CLLocationManager *locationManager;
-@property(nonatomic , retain) id delegate;
+@property (nonatomic , retain) id <LocationGetterDelegate> delegate;
+@property (nonatomic, strong) NSTimer *timer;
 
 +(id) sharedInstance;
 
-- (void)startUpdates;
+-(void) startUpdates;
 -(double) getLatitude;
 -(double) getLongitude;
 -(CLLocationCoordinate2D) getCoord;

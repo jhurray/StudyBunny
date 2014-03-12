@@ -10,6 +10,8 @@
 #import "MasterViewController.h"
 #import "MBProgressHUD.h"
 
+#define PHONEPROMPT @"Please enter your phone number..."
+
 @interface LoginViewController ()
 
 @end
@@ -57,7 +59,7 @@
     CGFloat inputHeight = DEVICEHEIGHT/9;
     phoneInput = [[SBTextField alloc] initWithFrame:CGRectMake(0, inputMiddle-inputHeight, DEVICEWIDTH, inputHeight)];
     [phoneInput setDelegate:self];
-    [phoneInput setText:@"Please enter your phone number"];
+    [phoneInput setText:PHONEPROMPT];
     [phoneInput setAlpha:0];
     [phoneInput setKeyboardType:UIKeyboardTypeDecimalPad];
     [phoneInput setReturnKeyType:UIReturnKeyDone];
@@ -181,7 +183,7 @@
                          
                      } completion:^(BOOL finished) {
                          if (![self.view.subviews containsObject:phoneInput]) {
-                             [phoneInput setText:@"Please enter your phone number"];
+                             [phoneInput setText:PHONEPROMPT];
                              [self.view addSubview:phoneInput];
                          }
                          [phoneInput becomeFirstResponder];
@@ -202,9 +204,12 @@
         NSLog(@"Facebook request started!\n" );
         if (!error) {
             
+             NSDictionary *userData = (NSDictionary *)result;
             [PFUser currentUser][@"facebook_id"] = @"blah";
             [PFUser currentUser][@"phoneNumber"] = @"blah";
-            [[PFUser currentUser] setObject:[result objectForKey:@"id"] forKey:@"facebook_id"];
+            [PFUser currentUser][@"name"] = @"blah";
+            [[PFUser currentUser] setObject:userData[@"id"] forKey:@"facebook_id"];
+            [[PFUser currentUser] setObject:userData[@"name"] forKey:@"name"];
             [[PFUser currentUser] setObject:phoneNum forKey:@"phoneNumber"];
             
             [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -248,7 +253,7 @@
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if([textField.text isEqualToString:@"Please enter your phone number"] || [textField.text isEqualToString:@""] ){
+    if([textField.text isEqualToString:PHONEPROMPT] || [textField.text isEqualToString:@""] ){
         return NO;
     }
     [textField resignFirstResponder];

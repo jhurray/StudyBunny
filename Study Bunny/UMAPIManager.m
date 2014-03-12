@@ -40,6 +40,9 @@ static UMAPIManager *sharedClient;
         NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
         if (error) {
             NSLog(@"\n An error occured: %@\n", error.description);
+            [UMAPIManager askForAuthTokenWithBlock:^{
+                NSLog(@"Grabbed on second try...");
+            }];
             return;
         }
         NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];

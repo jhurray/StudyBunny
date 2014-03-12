@@ -15,6 +15,11 @@
 #define KEYSECRET64 @"eTlGYWpsalJHZDdGR3JlQ25pWTdvQVU5VDQ0YTpINnZBRU8xOEo2MFpJTkxLVkMyX1pOUGFESThh"
 #define WN14 @"1970"
 
+//PARSE
+
+#define PARSE_YES = [NSNumber numberWithBool:YES]
+#define PARSE_NO = [NSNumber numberWithBool:NO]
+
 //MAP
 #define METERS_PER_MILE 1609.344
 
@@ -26,6 +31,8 @@
 #define DEVICEWIDTH [[UIScreen mainScreen] bounds].size.width
 #define BARBUTTONFRAME CGRectMake(0, 0, 30, 30)
 #define CELLHEIGHT 60
+
+#define MATCHCELLHEIGHT 100
 
 // COLORS / FONTS
 

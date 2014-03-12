@@ -10,6 +10,7 @@
 #import "UMAPIManager.h"
 #import "MyCoursesViewController.h"
 #import "MapViewController.h"
+#import "MatchPickerViewController.h"
 
 @interface MasterViewController ()
 
@@ -41,6 +42,15 @@
     [self.navigationController.navigationBar setBarTintColor:SECONDARYCOLOR];
     [self.navigationController.navigationBar setTranslucent:YES];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    
+    //nav bar buttons
+    UIButton *settingsBtn = [[UIButton alloc] initWithFrame:BARBUTTONFRAME];
+    UIImage *settings = [UIImage imageNamed:@"settings.png"];
+    [settingsBtn setImage:settings forState:UIControlStateNormal];
+    [settingsBtn addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *settingsBarButton = [[UIBarButtonItem alloc] initWithCustomView:settingsBtn];
+    self.navigationItem.rightBarButtonItem = settingsBarButton;
+    
    
     UILabel *titleView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, NAVBARHEIGHT)];
     [titleView setBackgroundColor:[UIColor clearColor]];
@@ -97,10 +107,10 @@
     [myCourses addTarget:self action:@selector(seeMyCourses) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:myCourses];
     
-    SBButton *logout = [[SBButton alloc] initWithFrame:CGRectMake(60, 3*DEVICEHEIGHT/5+2*buttonOffset, 200, buttonHeight)];
-    [logout setTitle:@"Logout" forState:UIControlStateNormal];
-    [logout addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:logout];
+    SBButton *findMatches = [[SBButton alloc] initWithFrame:CGRectMake(60, 3*DEVICEHEIGHT/5+2*buttonOffset, 200, buttonHeight)];
+    [findMatches setTitle:@"Find Matches" forState:UIControlStateNormal];
+    [findMatches addTarget:self action:@selector(findMatches) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:findMatches];
     
     FBRequest *request = [FBRequest requestForMe];
     
@@ -110,7 +120,7 @@
             // result is a dictionary with the user's Facebook data
             NSDictionary *userData = (NSDictionary *)result;
             NSString *name = userData[@"name"];
-            NSLog(@"No fb request error!\n");
+            NSLog(@"Succesful facebook request!\n");
             //animate name change
             [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
                 [helloWorld setText:[NSString stringWithFormat:@"Hello %@!", name]];
@@ -126,7 +136,13 @@
     
 }
 
--(void)studyNow{
+-(void) findMatches
+{
+    [self.navigationController pushViewController:[[MatchPickerViewController alloc] init] animated:NO];
+}
+
+-(void)studyNow
+{
     [self.navigationController pushViewController:[[MapViewController alloc] initWithNibName:nil bundle:nil] animated:NO];
 }
 

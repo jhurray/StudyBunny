@@ -12,7 +12,7 @@
 
 @implementation LocationGetter
 
-@synthesize locationManager, delegate;
+@synthesize locationManager, delegate, timer;
 
 BOOL didUpdate = NO;
 
@@ -36,6 +36,11 @@ static LocationGetter *sharedClient;
     return sharedClient.locationManager.location.coordinate;
 }
 
+-(void)continueUpdates
+{
+    [locationManager startUpdatingLocation];
+}
+
 - (void)startUpdates
 {
     NSLog(@"Starting Location Updates");
@@ -50,6 +55,9 @@ static LocationGetter *sharedClient;
     // Alternatively you can use kCLLocationAccuracyHundredMeters or kCLLocationAccuracyHundredMeters, though higher accuracy takes longer to resolve
     locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;
     [locationManager startUpdatingLocation];
+    
+    // set location to update every 5 minutes
+    timer = [NSTimer scheduledTimerWithTimeInterval:60*5 target:self selector:@selector(continueUpdates) userInfo:nil repeats:YES];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
@@ -61,14 +69,32 @@ static LocationGetter *sharedClient;
 // Delegate method from the CLLocationManagerDelegate protocol.
 - (void)locationManager:(CLLocationManager *)manage didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
+    /*
     if (didUpdate)
         return;
     
     didUpdate = YES;
+    */
+    
+    NSLog(@"Updated Location Succesfully");
     // Disable future updates to save power.
     [locationManager stopUpdatingLocation];
     
     // let our delegate know we're done
     [delegate newLocation:newLocation];
+    
+    //save user
+    PFGeoPoint *location = [PFGeoPoint geoPointWithLocation:newLocation];
+    [[PFUser currentUser] setObject:location forKey:@"location"];
+    [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        
+        if (error) {
+            NSLog(@"error with location save... %@\n", error.localizedDescription);
+            [[PFUser currentUser] setObject:location forKey:@"location"];
+            [[PFUser currentUser] saveEventually];
+        }
+        NSLog(@"Successful user location save!");
+    }];
+    
 }
 @end

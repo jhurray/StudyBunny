@@ -31,7 +31,7 @@
         [topView setBackgroundColor:[UIColor whiteColor]];
         [bottomView addTarget:self action:@selector(bottomViewTouched) forControlEvents:UIControlEventTouchUpInside];
         
-        NSLog(@"%f, %f, %f, %f", self.frame.origin.x,self.frame.origin.y, self.frame.size.height, self.frame.size.width );
+        // NSLog(@"%f, %f, %f, %f", self.frame.origin.x,self.frame.origin.y, self.frame.size.height, self.frame.size.width );
         [self addSubview:bottomView];
         [self addSubview:topView];
         //[self bringSubviewToFront:self.contentView];

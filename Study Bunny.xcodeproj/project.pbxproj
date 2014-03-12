@@ -19,6 +19,10 @@
 		380E59DA18B670E500F18AEB /* CourseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 380E59D918B670E500F18AEB /* CourseTableViewCell.m */; };
 		385E80B6189EE8F300E9766D /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 385E80B5189EE8F300E9766D /* FacebookSDK.framework */; };
 		385E80BB189EE92000E9766D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 385E80BA189EE92000E9766D /* MBProgressHUD.m */; };
+		387359CA18D0FCA60093132F /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 387359C918D0FCA50093132F /* settings.png */; };
+		387359D318D1086B0093132F /* MatchPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 387359D218D1086B0093132F /* MatchPickerViewController.m */; };
+		387359D618D1105A0093132F /* MatchedUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 387359D518D1105A0093132F /* MatchedUser.m */; };
+		387359D918D1198C0093132F /* MatchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 387359D818D1198C0093132F /* MatchTableViewCell.m */; };
 		388BBA2A18CF58830070EC5F /* SBTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 388BBA2918CF58830070EC5F /* SBTextField.m */; };
 		388BBA2D18D0D48C0070EC5F /* SBMatchMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 388BBA2C18D0D48A0070EC5F /* SBMatchMaker.m */; };
 		38BF3E4418AC526400C96105 /* UMAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BF3E4318AC526400C96105 /* UMAPIManager.m */; };
@@ -82,6 +86,13 @@
 		385E80B5189EE8F300E9766D /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		385E80B9189EE92000E9766D /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		385E80BA189EE92000E9766D /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		387359C918D0FCA50093132F /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
+		387359D118D1086B0093132F /* MatchPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchPickerViewController.h; sourceTree = "<group>"; };
+		387359D218D1086B0093132F /* MatchPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchPickerViewController.m; sourceTree = "<group>"; };
+		387359D418D1105A0093132F /* MatchedUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchedUser.h; sourceTree = "<group>"; };
+		387359D518D1105A0093132F /* MatchedUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchedUser.m; sourceTree = "<group>"; };
+		387359D718D1198C0093132F /* MatchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchTableViewCell.h; sourceTree = "<group>"; };
+		387359D818D1198C0093132F /* MatchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchTableViewCell.m; sourceTree = "<group>"; };
 		388BBA2818CF58830070EC5F /* SBTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBTextField.h; sourceTree = "<group>"; };
 		388BBA2918CF58830070EC5F /* SBTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBTextField.m; sourceTree = "<group>"; };
 		388BBA2B18D0D4890070EC5F /* SBMatchMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBMatchMaker.h; sourceTree = "<group>"; };
@@ -210,6 +221,7 @@
 			children = (
 				380E59CB18AEC97A00F18AEB /* check.png */,
 				380E59CC18AEC97B00F18AEB /* cross.png */,
+				387359C918D0FCA50093132F /* settings.png */,
 				380E59C618ADE41C00F18AEB /* bunny.png */,
 				38D2D7A1189DB62E003FF499 /* AppDelegate.h */,
 				38D2D7A2189DB62E003FF499 /* AppDelegate.m */,
@@ -254,24 +266,28 @@
 		38D2D7C5189DB9E5003FF499 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
-				385E80B9189EE92000E9766D /* MBProgressHUD.h */,
-				385E80BA189EE92000E9766D /* MBProgressHUD.m */,
-				38BF3E4218AC526400C96105 /* UMAPIManager.h */,
-				38BF3E4318AC526400C96105 /* UMAPIManager.m */,
 				380E59C018ADD2DE00F18AEB /* Course.h */,
 				380E59C118ADD2DE00F18AEB /* Course.m */,
-				380E59C318ADDE3500F18AEB /* SBButton.h */,
-				380E59C418ADDE3500F18AEB /* SBButton.m */,
 				380E59CF18AECC6900F18AEB /* CoursePickerSegmentView.h */,
 				380E59D018AECC6900F18AEB /* CoursePickerSegmentView.m */,
-				380E59D518B3C1B400F18AEB /* LocationGetter.h */,
-				380E59D618B3C1B400F18AEB /* LocationGetter.m */,
 				380E59D818B670E500F18AEB /* CourseTableViewCell.h */,
 				380E59D918B670E500F18AEB /* CourseTableViewCell.m */,
-				388BBA2818CF58830070EC5F /* SBTextField.h */,
-				388BBA2918CF58830070EC5F /* SBTextField.m */,
+				380E59D518B3C1B400F18AEB /* LocationGetter.h */,
+				380E59D618B3C1B400F18AEB /* LocationGetter.m */,
+				387359D418D1105A0093132F /* MatchedUser.h */,
+				387359D518D1105A0093132F /* MatchedUser.m */,
+				387359D718D1198C0093132F /* MatchTableViewCell.h */,
+				387359D818D1198C0093132F /* MatchTableViewCell.m */,
+				385E80B9189EE92000E9766D /* MBProgressHUD.h */,
+				385E80BA189EE92000E9766D /* MBProgressHUD.m */,
+				380E59C318ADDE3500F18AEB /* SBButton.h */,
+				380E59C418ADDE3500F18AEB /* SBButton.m */,
 				388BBA2B18D0D4890070EC5F /* SBMatchMaker.h */,
 				388BBA2C18D0D48A0070EC5F /* SBMatchMaker.m */,
+				388BBA2818CF58830070EC5F /* SBTextField.h */,
+				388BBA2918CF58830070EC5F /* SBTextField.m */,
+				38BF3E4218AC526400C96105 /* UMAPIManager.h */,
+				38BF3E4318AC526400C96105 /* UMAPIManager.m */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -279,14 +295,16 @@
 		38D2D7C6189DB9F0003FF499 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				38D2D7C7189DBA42003FF499 /* LoginViewController.h */,
-				38D2D7C8189DBA42003FF499 /* LoginViewController.m */,
-				38D2D7CA189DBA53003FF499 /* MasterViewController.h */,
-				38D2D7CB189DBA53003FF499 /* MasterViewController.m */,
-				38D2D7CD189DBA73003FF499 /* MapViewController.h */,
-				38D2D7CE189DBA73003FF499 /* MapViewController.m */,
 				380E59C818ADEA2B00F18AEB /* CoursePickerViewController.h */,
 				380E59C918ADEA2B00F18AEB /* CoursePickerViewController.m */,
+				38D2D7C7189DBA42003FF499 /* LoginViewController.h */,
+				38D2D7C8189DBA42003FF499 /* LoginViewController.m */,
+				38D2D7CD189DBA73003FF499 /* MapViewController.h */,
+				38D2D7CE189DBA73003FF499 /* MapViewController.m */,
+				38D2D7CA189DBA53003FF499 /* MasterViewController.h */,
+				38D2D7CB189DBA53003FF499 /* MasterViewController.m */,
+				387359D118D1086B0093132F /* MatchPickerViewController.h */,
+				387359D218D1086B0093132F /* MatchPickerViewController.m */,
 				380E59D218B2FA8500F18AEB /* MyCoursesViewController.h */,
 				380E59D318B2FA8600F18AEB /* MyCoursesViewController.m */,
 			);
@@ -376,6 +394,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				387359CA18D0FCA60093132F /* settings.png in Resources */,
 				380E59CE18AEC97B00F18AEB /* cross.png in Resources */,
 				38D2D79D189DB62E003FF499 /* InfoPlist.strings in Resources */,
 				38D2D7A5189DB62E003FF499 /* Images.xcassets in Resources */,
@@ -400,6 +419,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				380E59D118AECC6900F18AEB /* CoursePickerSegmentView.m in Sources */,
+				387359D618D1105A0093132F /* MatchedUser.m in Sources */,
 				38D2D7CC189DBA53003FF499 /* MasterViewController.m in Sources */,
 				380E59CA18ADEA2B00F18AEB /* CoursePickerViewController.m in Sources */,
 				385E80BB189EE92000E9766D /* MBProgressHUD.m in Sources */,
@@ -409,8 +429,10 @@
 				38D2D7CF189DBA73003FF499 /* MapViewController.m in Sources */,
 				380E59C218ADD2DE00F18AEB /* Course.m in Sources */,
 				38D2D79F189DB62E003FF499 /* main.m in Sources */,
+				387359D918D1198C0093132F /* MatchTableViewCell.m in Sources */,
 				388BBA2A18CF58830070EC5F /* SBTextField.m in Sources */,
 				388BBA2D18D0D48C0070EC5F /* SBMatchMaker.m in Sources */,
+				387359D318D1086B0093132F /* MatchPickerViewController.m in Sources */,
 				38D2D7C9189DBA42003FF499 /* LoginViewController.m in Sources */,
 				380E59D718B3C1B400F18AEB /* LocationGetter.m in Sources */,
 				38BF3E4418AC526400C96105 /* UMAPIManager.m in Sources */,
