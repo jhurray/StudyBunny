@@ -15,7 +15,7 @@
 
 @implementation MapViewController
 
-@synthesize map, titleView, matches, currentMapDist, myCourses;
+@synthesize map, titleView, matches, currentMapDist, myCourses, matchedUsers, matcher;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -56,23 +56,10 @@
     [map setDelegate:self];
     [self.view addSubview:map];
     
-    SBMatchMaker *sbMM = [[SBMatchMaker alloc] init];
-    [sbMM setDelegate:self];
-    [sbMM getMatches];
+    matcher = [[SBMatchMaker alloc] init];
+    [matcher setDelegate:self];
+    [matcher getMatches];
     
-    /*
-    [Course getMyCoursesWithCompletion:^(NSArray *courses) {
-        myCourses = courses;
-        NSMutableArray *subjectCodes = [NSMutableArray array];
-        NSMutableArray *catalogNumbers = [NSMutableArray array];
-        for (Course *c in courses) {
-            [subjectCodes addObject:c.subjectCode];
-            [catalogNumbers addObject:c.catalogNum];
-        }
-        [self getStudyMatchesForSubjectCodes:subjectCodes andCatalogNums:catalogNumbers];
-        
-    }];
-    */
      
     [MBProgressHUD showHUDAddedTo:self.view withText:@"Loading Courses"];
 }
@@ -81,7 +68,6 @@
 
 -(void)matchesMade:(SBMatchMaker *)matchMaker WithError:(NSError *)error
 {
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
     if (error) {
         NSLog(@"Error in MacthesMadeWithError: %@\n", error.localizedDescription);
         
@@ -91,35 +77,82 @@
     }
     myCourses = matchMaker.myCourses;
     NSLog(@"Mapped dictionary is \n%@\n", matchMaker.usersMappedToCourses);
+    [self fetchMatchedUsers];
     
 }
 
 
 // ------------------------------------- SELECTOR FUNCS -----------------------------------------------------//
 
-
--(void)getStudyMatchesForSubjectCodes:(NSArray *)subCodes andCatalogNums:(NSArray *)catNums
+-(void)fetchMatchedUsers
 {
-    MBProgressHUD *hud = [MBProgressHUD HUDForView:self.view];
-    [hud setLabelText:@"Finding Study Partners..."];
-    PFQuery *q = [PFQuery queryWithClassName:@"Course"];
-    [q whereKey:@"subjectCode" containedIn:subCodes];
-    [q whereKey:@"catalogNum" containedIn:catNums];
-    [q whereKey:@"owner" notEqualTo:[PFUser currentUser].objectId];
+    PFQuery *q = [PFUser query];
+    [q whereKey:@"objectId" containedIn:matcher.userMatches];
+    
+    [q whereKey:@"location"
+       nearGeoPoint:[PFGeoPoint geoPointWithLatitude:[[LocationGetter sharedInstance] getLatitude]
+                                           longitude:[[LocationGetter sharedInstance]getLongitude]]
+   withinKilometers:20];
+    
     [q findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-       // do user query and push that shit into Matches
         if (error) {
-            NSLog(@"An error occured: %@", error.localizedDescription);
+            NSLog(@"Error: failed fetching matched users %@\n", error.localizedDescription);
             return;
         }
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        NSLog(@"DONE WITH QUERY\n");
-        NSLog(@"objects are: \n\n%@\n", objects);
+        NSLog(@"\nuser objects count is %lu\n", objects.count);
+        for (PFUser *u in objects)
+        {
+            if ([matcher.madeMatches containsObject:u.objectId] ) {
+                //continue;
+            }
+            MatchedUser *mu = [[MatchedUser alloc] initWithPFUser:u];
+            mu.matchedCourses = [matcher.usersMappedToCourses objectForKey:mu.userId];
+            [matchedUsers addObject:mu];
+            MKPointAnnotation *ann = [[MKPointAnnotation alloc] init];
+            [ann setCoordinate:mu.coord];
+            [ann setTitle:mu.name];
+            [ann setSubtitle:[mu getConcatenatedCourses]];
+            [map addAnnotation:ann];
+        }
         
+        // drop Pins
+        
+        
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
 }
 
+
 // ------------------------------------- MAP VIEW DELEGATE FUNCS -------------------------------------------------//
+
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
+{
+    // If it's the user location, just return nil.
+    if ([annotation isKindOfClass:[MKUserLocation class]])
+        return nil;
+    
+    // Handle any custom annotations.
+    if ([annotation isKindOfClass:[MKPointAnnotation class]])
+    {
+        // Try to dequeue an existing pin view first.
+        MKPinAnnotationView *pinView = (MKPinAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:@"CustomPinAnnotationView"];
+        if (!pinView)
+        {
+            // If an existing pin view was not available, create one.
+            pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"CustomPinAnnotationView"];
+            pinView.animatesDrop = YES;
+            pinView.canShowCallout = YES;
+            pinView.pinColor = MKPinAnnotationColorRed;
+            
+        } else {
+            pinView.annotation = annotation;
+        }
+        return pinView;
+    }
+    return nil;
+}
+
 
 -(void) viewWillAppear:(BOOL)animated{
     

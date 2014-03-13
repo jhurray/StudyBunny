@@ -53,7 +53,7 @@ static LocationGetter *sharedClient;
     // locationManager.distanceFilter = 1000;  // update is triggered after device travels this far (meters)
     
     // Alternatively you can use kCLLocationAccuracyHundredMeters or kCLLocationAccuracyHundredMeters, though higher accuracy takes longer to resolve
-    locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;
+    locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
     [locationManager startUpdatingLocation];
     
     // set location to update every 5 minutes

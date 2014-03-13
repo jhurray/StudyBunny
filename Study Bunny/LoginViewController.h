@@ -17,5 +17,7 @@
 @property (nonatomic, strong) SBButton *done;
 @property (nonatomic, strong) UIView *bunnyCircle;
 @property (nonatomic, strong) UIImageView *bunny;
+@property (nonatomic, strong) NSString *phoneNum;
+@property (nonatomic, strong) NSString *email;
 
 @end

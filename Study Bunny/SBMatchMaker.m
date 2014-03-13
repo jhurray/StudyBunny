@@ -10,7 +10,7 @@
 
 @implementation SBMatchMaker
 
-@synthesize usersMappedToCourses, userMatches, myCourses, delegate;
+@synthesize usersMappedToCourses, userMatches, myCourses, delegate, madeMatches, pendingMatches;
 
 -(id)init
 {
@@ -19,6 +19,8 @@
         myCourses = [NSArray array];
         usersMappedToCourses = [NSMutableDictionary dictionary];
         userMatches = [NSMutableArray array];
+        madeMatches = [NSMutableArray array];
+        pendingMatches = [NSMutableArray array];
     }
     return self;
 }
@@ -53,8 +55,8 @@
             [delegate matchesMade:self WithError:error];
             return;
         }
-        NSLog(@"DONE WITH QUERY\n");
-        NSLog(@"objects are: \n\n%@\n", objects);
+        //NSLog(@"DONE WITH QUERY\n");
+        //NSLog(@"objects are: \n\n%@\n", objects);
         for (PFObject *o in objects) {
             Course *course = [[Course alloc] initWithPFObject:o];
             if([userMatches containsObject:course.owner])
@@ -80,9 +82,54 @@
             return;
         }
         // matches made without errors
-        [delegate matchesMade:self WithError:error];
+        [self loadPendingAndMadeMatches];
         // all done
     }];
+}
+
+
+-(void)loadPendingAndMadeMatches
+{
+    PFQuery *q1 = [PFQuery queryWithClassName:@"Match"];
+    [q1 whereKey:@"uid1" equalTo:[PFUser currentUser].objectId];
+    PFQuery *q2 = [PFQuery queryWithClassName:@"Match"];
+    [q2 whereKey:@"uid2" equalTo:[PFUser currentUser].objectId];
+    PFQuery *masterQ = [PFQuery orQueryWithSubqueries:[NSArray arrayWithObjects:q1, q2, nil]];
+    [masterQ findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (error) {
+            NSLog(@"An error occured while loading matches: %@", error.localizedDescription);
+            [delegate matchesMade:self WithError:error];
+            return;
+        }
+        
+        for (PFObject *o in objects) {
+            NSNumber *count = [o objectForKey:@"count"];
+            if([o[@"uid1"] isEqualToString:[PFUser currentUser].objectId])
+            {
+                if ([count isEqualToNumber:[NSNumber numberWithInt:1]]) {
+                    [pendingMatches addObject:o[@"uid2"]];
+                }
+                else{
+                    // count ==2
+                    [madeMatches addObject:o[@"uid2"]];
+                }
+            }
+            else
+            {
+                // uid1 is the string I want
+                if ([count isEqualToNumber:[NSNumber numberWithInt:1]]) {
+                    [pendingMatches addObject:o[@"uid1"]];
+                }
+                else{
+                    // count ==2
+                    [madeMatches addObject:o[@"uid1"]];
+                }
+            }
+        }
+        
+        [delegate matchesMade:self WithError:error];
+    }];
+    
 }
 
 

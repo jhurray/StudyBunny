@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import "SBMatchMaker.h"
+#import "MatchedUser.h"
 
 @interface MapViewController : UIViewController <MKMapViewDelegate, SBMatchMakerDelegate>
 
@@ -17,5 +18,7 @@
 @property (nonatomic, strong) NSMutableArray *matches;
 @property (nonatomic) CGFloat currentMapDist;
 @property (nonatomic, strong) NSArray *myCourses;
+@property (nonatomic, strong) NSMutableArray *matchedUsers;
+@property (nonatomic, strong) SBMatchMaker *matcher;
 
 @end

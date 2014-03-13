@@ -17,6 +17,7 @@
 
 @interface SettingsViewController : UIViewController
 
+@property (nonatomic, strong) UILabel *titleView;
 @property (strong, nonatomic) SettingsView *view;
 @property (weak, nonatomic) id<SettingsViewDelegate> delegate;
 

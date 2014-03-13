@@ -22,7 +22,10 @@
 @property (nonatomic, strong) NSArray *myCourses;
 @property (nonatomic, strong) NSMutableArray *userMatches;
 @property (nonatomic, strong) NSMutableDictionary *usersMappedToCourses;
+@property (nonatomic, strong) NSMutableArray *pendingMatches;
+@property (nonatomic, strong) NSMutableArray *madeMatches;
 
 -(void)getMatches;
+
 
 @end

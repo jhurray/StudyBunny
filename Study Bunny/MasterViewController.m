@@ -71,13 +71,13 @@
     
     [self.view setBackgroundColor:MAINCOLOR];
 
-    CGFloat bunnyFrame = 145;
-    UIView *bunnyCircle = [[UIView alloc] initWithFrame:CGRectMake((DEVICEWIDTH-bunnyFrame)/2, DEVICEHEIGHT/3-20, bunnyFrame, bunnyFrame)];
+    CGFloat bunnyFrame = 185;
+    UIView *bunnyCircle = [[UIView alloc] initWithFrame:CGRectMake((DEVICEWIDTH-bunnyFrame)/2, DEVICEHEIGHT/4-20, bunnyFrame, bunnyFrame)];
     [bunnyCircle setBackgroundColor:SECONDARYCOLOR];
     [bunnyCircle.layer setCornerRadius:bunnyFrame/2];
     [self.view addSubview:bunnyCircle];
     
-    CGFloat bunnyImgFrame = 100;
+    CGFloat bunnyImgFrame = 120;
     UIImageView *bunny = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, bunnyImgFrame, bunnyImgFrame)];
     [bunny setCenter:bunnyCircle.center];
     UIImage *bunnyImg = [UIImage imageNamed:@"bunny.png"];
@@ -91,15 +91,15 @@
     [studyNow addTarget:self action:@selector(studyNow) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:studyNow];
     
-    SBButton *myCourses = [[SBButton alloc] initWithFrame:CGRectMake(60, 3*DEVICEHEIGHT/5+buttonOffset, 200, buttonHeight)];
-    [myCourses setTitle:@"My Courses" forState:UIControlStateNormal];
-    [myCourses addTarget:self action:@selector(seeMyCourses) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:myCourses];
-    
-    SBButton *findMatches = [[SBButton alloc] initWithFrame:CGRectMake(60, 3*DEVICEHEIGHT/5+2*buttonOffset, 200, buttonHeight)];
+    SBButton *findMatches = [[SBButton alloc] initWithFrame:CGRectMake(60, 3*DEVICEHEIGHT/5+buttonOffset, 200, buttonHeight)];
     [findMatches setTitle:@"Find Matches" forState:UIControlStateNormal];
     [findMatches addTarget:self action:@selector(findMatches) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:findMatches];
+    
+    SBButton *myCourses = [[SBButton alloc] initWithFrame:CGRectMake(60, 3*DEVICEHEIGHT/5+2*buttonOffset, 200, buttonHeight)];
+    [myCourses setTitle:@"My Matches" forState:UIControlStateNormal];
+    [myCourses addTarget:self action:@selector(seeMyCourses) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:myCourses];
     
     FBRequest *request = [FBRequest requestForMe];
     
@@ -121,12 +121,12 @@
 
 -(void) findMatches
 {
-    [self.navigationController pushViewController:[[MatchPickerViewController alloc] init] animated:YES];
+    [self.navigationController pushViewController:[[MatchPickerViewController alloc] init] animated:NO];
 }
 
 -(void)studyNow
 {
-    [self.navigationController pushViewController:[[MapViewController alloc] initWithNibName:nil bundle:nil] animated:YES];
+    [self.navigationController pushViewController:[[MapViewController alloc] initWithNibName:nil bundle:nil] animated:NO];
 }
 
 -(void)seeMyCourses

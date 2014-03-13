@@ -55,6 +55,7 @@
 		38D2D7E2189DBDD2003FF499 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38D2D7E1189DBDD2003FF499 /* MobileCoreServices.framework */; };
 		38D2D7E4189DBDE1003FF499 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38D2D7E3189DBDE1003FF499 /* Security.framework */; };
 		38D2D7E8189DBDF6003FF499 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38D2D7E7189DBDF6003FF499 /* SystemConfiguration.framework */; };
+		38DC6B3218D18B1400E6EDA7 /* SBContactView.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DC6B3118D18B1400E6EDA7 /* SBContactView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -140,6 +141,8 @@
 		38D2D7E1189DBDD2003FF499 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		38D2D7E3189DBDE1003FF499 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		38D2D7E7189DBDF6003FF499 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		38DC6B3018D18B1400E6EDA7 /* SBContactView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBContactView.h; sourceTree = "<group>"; };
+		38DC6B3118D18B1400E6EDA7 /* SBContactView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBContactView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -304,6 +307,8 @@
 				388BBA2918CF58830070EC5F /* SBTextField.m */,
 				38BF3E4218AC526400C96105 /* UMAPIManager.h */,
 				38BF3E4318AC526400C96105 /* UMAPIManager.m */,
+				38DC6B3018D18B1400E6EDA7 /* SBContactView.h */,
+				38DC6B3118D18B1400E6EDA7 /* SBContactView.m */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -442,6 +447,7 @@
 				380E59CA18ADEA2B00F18AEB /* CoursePickerViewController.m in Sources */,
 				385E80BB189EE92000E9766D /* MBProgressHUD.m in Sources */,
 				38D2D7A3189DB62E003FF499 /* AppDelegate.m in Sources */,
+				38DC6B3218D18B1400E6EDA7 /* SBContactView.m in Sources */,
 				207EE65E18D1378F006F869D /* SettingsViewController.m in Sources */,
 				380E59D418B2FA8600F18AEB /* MyCoursesViewController.m in Sources */,
 				380E59DA18B670E500F18AEB /* CourseTableViewCell.m in Sources */,

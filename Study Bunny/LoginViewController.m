@@ -11,6 +11,7 @@
 #import "MBProgressHUD.h"
 
 #define PHONEPROMPT @"Please enter your phone number..."
+#define EMAILPROMPT @"Please enter your email address..."
 
 @interface LoginViewController ()
 
@@ -18,7 +19,7 @@
 
 @implementation LoginViewController
 
-@synthesize loginBtn, phoneInput, bunnyCircle, bunny, done;
+@synthesize loginBtn, phoneInput, bunnyCircle, bunny, done, phoneNum, email;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -70,7 +71,7 @@
     CGFloat doneHeight = DEVICEHEIGHT/13;
     done = [[SBButton alloc] initWithFrame:CGRectMake(110, doneMiddle-doneHeight/2, DEVICEWIDTH-220, doneHeight)];
     [done setTitle:@"Done" forState:UIControlStateNormal];
-    [done addTarget:self  action:@selector(animateReversePhoneInput) forControlEvents:UIControlEventTouchUpInside];
+    [done addTarget:self  action:@selector(startEmailInput) forControlEvents:UIControlEventTouchUpInside];
     [done setAlpha:0];
     
     CGFloat bunnyFrame = 195;
@@ -118,7 +119,7 @@
             } else {
                 NSLog(@"Uh oh. An error occurred: \n\n%@", error);
             }
-        } else if (!user.isNew) {
+        } else if (user.isNew) {
             NSLog(@"User with facebook signed up and logged in!");
             
             //adding a column to user table
@@ -149,6 +150,24 @@
                      }];
 }
 
+-(void)startEmailInput
+{
+    if (done.tag == 1) {
+        email = phoneInput.text;
+        [self animateReversePhoneInput];
+        return;
+    }
+    
+    phoneNum = phoneInput.text;
+    [phoneInput setKeyboardType:UIKeyboardTypeEmailAddress];
+    [phoneInput setText:EMAILPROMPT];
+    [phoneInput setTextColor:MAINCOLOR];
+    [done setTag:1];
+    [done removeFromSuperview];
+    [done setAlpha:0];
+    [phoneInput reloadInputViews];
+}
+
 -(void)animateReversePhoneInput
 {
     [UIView animateWithDuration:0.4 delay:0
@@ -168,7 +187,7 @@
                                               [bunny setAlpha:1.0];
                                               
                                           } completion:^(BOOL finished) {
-                                              [self getNewUserFacebookInfoWithPhoneNumber:phoneInput.text];
+                                              [self getNewUserFacebookInfoWithPhoneNumber];
                                           }];
                      }];
 }
@@ -198,19 +217,17 @@
                      }];
 }
 
--(void)getNewUserFacebookInfoWithPhoneNumber:(NSString *)phoneNum
+-(void)getNewUserFacebookInfoWithPhoneNumber
 {
     [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
         NSLog(@"Facebook request started!\n" );
         if (!error) {
             
              NSDictionary *userData = (NSDictionary *)result;
-            [PFUser currentUser][@"facebook_id"] = @"blah";
-            [PFUser currentUser][@"phoneNumber"] = @"blah";
-            [PFUser currentUser][@"name"] = @"blah";
             [[PFUser currentUser] setObject:userData[@"id"] forKey:@"facebook_id"];
             [[PFUser currentUser] setObject:userData[@"name"] forKey:@"name"];
             [[PFUser currentUser] setObject:phoneNum forKey:@"phoneNumber"];
+            [[PFUser currentUser] setObject:email forKey:@"email"];
             
             [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if(succeeded){
@@ -263,13 +280,29 @@
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     
+    // this is here to get rid of prompt
     NSUInteger futureLength = [textField.text length]+1;
-    if (futureLength > 12) {
+    if (futureLength > 12 && ([textField.text isEqualToString:PHONEPROMPT] || [textField.text isEqualToString:EMAILPROMPT])) {
         // to get rid of the prompt
         textField.text = @"";
         [textField setTextColor:MAINCOLOR];
         return YES;
     }
+    
+    // this is here for email address
+    if (done.tag == 1) {
+        NSRange range = [textField.text rangeOfString:@"@"];
+        if (range.location != NSNotFound)
+        {
+            NSRange range = [textField.text rangeOfString:@"."];
+            if (range.location != NSNotFound)
+            {
+                [self animateDoneBtn];
+            }
+        }
+        return YES;
+    }
+    
     if (futureLength == 11 && ![string isEqualToString:@""]) {
         // to prevent more than 10 digits
         return NO;

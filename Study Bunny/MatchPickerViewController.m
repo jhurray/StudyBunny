@@ -38,7 +38,7 @@
     [self.navigationController.navigationBar setTranslucent:YES];
     
     UIImageView *bunnyBack = [[UIImageView alloc] initWithFrame:CGRectMake(0, 30, DEVICEWIDTH, DEVICEHEIGHT-20)];
-    [bunnyBack setImage:[self changeImage:[UIImage imageNamed:@"bunny.png"] toColor:SECONDARYCOLOR]];
+    [bunnyBack setImage:[self changeImage:[UIImage imageNamed:@"bunny.png"] toColor:TERTIARYCOLOR]];
     
     titleView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, NAVBARHEIGHT)];
     [titleView setBackgroundColor:[UIColor clearColor]];
@@ -76,6 +76,7 @@
 {
     PFQuery *q = [PFUser query];
     [q whereKey:@"objectId" containedIn:matcher.userMatches];
+    [q orderByAscending:@"name"];
     [q findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (error) {
             NSLog(@"Error: failed fetching matched users %@\n", error.localizedDescription);
@@ -84,6 +85,9 @@
         NSLog(@"\nuser objects count is %lu\n", objects.count);
         for (PFUser *u in objects)
         {
+            if ([matcher.madeMatches containsObject:u.objectId] ) {
+                //continue;
+            }
             MatchedUser *mu = [[MatchedUser alloc] initWithPFUser:u];
             mu.matchedCourses = [matcher.usersMappedToCourses objectForKey:mu.userId];
             [matchedUsers addObject:mu];
@@ -115,7 +119,85 @@
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    MatchTableViewCell *cell = (MatchTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    
+    PFObject *match = [PFObject objectWithClassName:@"Match"];
+    NSString *myUid = [PFUser currentUser].objectId;
+    NSString *otherUid = ((MatchedUser *)[matchedUsers objectAtIndex:indexPath.row]).userId;
+    // largest goes first!!!!
+    if (myUid > otherUid) {
+        [match setObject:myUid forKey:@"uid1"];
+        [match setObject:otherUid forKey:@"uid2"];
+    }
+    else{
+        [match setObject:otherUid forKey:@"uid1"];
+        [match setObject:myUid forKey:@"uid2"];
+    }
+    PFQuery *q = [PFQuery queryWithClassName:@"Match"];
+    [q whereKey:@"uid1" equalTo:match[@"uid1"]];
+    [q whereKey:@"uid2" equalTo:match[@"uid2"]];
+    [q whereKey:@"count" equalTo:[NSNumber numberWithInt:1]];
+    
+    if(cell.matchMade)
+    {
+        
+        [q findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (error) {
+                NSLog(@"Match query sucked!!!... %@", error.localizedDescription);
+                return ;
+            }
+            if (objects.count == 0) {
+                // no match
+                [match setObject:[NSNumber numberWithInt:1] forKey:@"count"];
+                [match saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if (error) {
+                        NSLog(@"Match Not saved!!!... %@", error.localizedDescription);
+                        return ;
+                    }
+                    
+                    // manipulate the matcher
+                    NSString *matchId = [matchedUsers objectAtIndex:indexPath.row];
+                    [matcher.pendingMatches addObject:matchId];
+                    NSLog(@"Succesful new match save!");
+                }];
+            }
+            else{
+                PFObject *qMatch = objects[0];
+                [qMatch setObject:[NSNumber numberWithInt:2] forKey:@"count"];
+                [qMatch saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if (error) {
+                        NSLog(@"Match Not saved!!!... %@", error.localizedDescription);
+                        return ;
+                    }
+                    
+                    // manipulate the matcher
+                    NSString *matchId = [matchedUsers objectAtIndex:indexPath.row];
+                    [matcher.madeMatches addObject:matchId];
+                    [matcher. pendingMatches removeObject:matchId];
+                    NSLog(@"Succesful match updated!");
+                }];
+            }
+        }];
+        
+    }
+    else{
+        
+        // delete the shit!!!!
+        [q findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+           
+            if (error) {
+                NSLog(@"Match Not deleted!!!... %@", error.localizedDescription);
+                return ;
+            }
+            for (PFObject *o in objects) {
+                [o deleteInBackground];
+                NSString *matchId = [matchedUsers objectAtIndex:indexPath.row];
+                [matcher.pendingMatches removeObject:matchId];
+            }
+            
+        }];
+        
+    }
     
 }
 
@@ -159,6 +241,13 @@
     [cell.textLabel setAdjustsFontSizeToFitWidth:YES];
     MatchedUser *user = [matchedUsers objectAtIndex:indexPath.row];
     [cell setCellFeaturesWithMatchedUser:user];
+    if ([matcher.pendingMatches containsObject:user.userId]) {
+        cell.matchMade = TRUE;
+    }
+    if (cell.matchMade) {
+        [cell makeHighlighted];
+    }
+    
 
     //cell.textLabel.text = [NSString stringWithFormat:@"%@ has %lu matches", user.name, user.matchedCourses.count];
     

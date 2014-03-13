@@ -21,7 +21,7 @@
         [self setFont:[UIFont fontWithName:FONT size:30]];
         //[self.layer setCornerRadius:5];
         [self setAdjustsFontSizeToFitWidth:YES];
-        [self setAlpha:0.8];
+        [self setAlpha:0.9];
     }
     return self;
 }
