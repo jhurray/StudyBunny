@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		207EE65418D12592006F869D /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 207EE65318D12592006F869D /* FacebookSDK.framework */; };
+		207EE65B18D12933006F869D /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 207EE65A18D12933006F869D /* SettingsView.m */; };
 		380E59C218ADD2DE00F18AEB /* Course.m in Sources */ = {isa = PBXBuildFile; fileRef = 380E59C118ADD2DE00F18AEB /* Course.m */; };
 		380E59C518ADDE3500F18AEB /* SBButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 380E59C418ADDE3500F18AEB /* SBButton.m */; };
 		380E59C718ADE41C00F18AEB /* bunny.png in Resources */ = {isa = PBXBuildFile; fileRef = 380E59C618ADE41C00F18AEB /* bunny.png */; };
@@ -17,7 +19,6 @@
 		380E59D418B2FA8600F18AEB /* MyCoursesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 380E59D318B2FA8600F18AEB /* MyCoursesViewController.m */; };
 		380E59D718B3C1B400F18AEB /* LocationGetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 380E59D618B3C1B400F18AEB /* LocationGetter.m */; };
 		380E59DA18B670E500F18AEB /* CourseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 380E59D918B670E500F18AEB /* CourseTableViewCell.m */; };
-		385E80B6189EE8F300E9766D /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 385E80B5189EE8F300E9766D /* FacebookSDK.framework */; };
 		385E80BB189EE92000E9766D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 385E80BA189EE92000E9766D /* MBProgressHUD.m */; };
 		387359CA18D0FCA60093132F /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 387359C918D0FCA50093132F /* settings.png */; };
 		387359D318D1086B0093132F /* MatchPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 387359D218D1086B0093132F /* MatchPickerViewController.m */; };
@@ -66,6 +67,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		207EE65318D12592006F869D /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
+		207EE65918D12933006F869D /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
+		207EE65A18D12933006F869D /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
 		380E59C018ADD2DE00F18AEB /* Course.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Course.h; sourceTree = "<group>"; };
 		380E59C118ADD2DE00F18AEB /* Course.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Course.m; sourceTree = "<group>"; };
 		380E59C318ADDE3500F18AEB /* SBButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBButton.h; sourceTree = "<group>"; };
@@ -83,7 +87,6 @@
 		380E59D618B3C1B400F18AEB /* LocationGetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationGetter.m; sourceTree = "<group>"; };
 		380E59D818B670E500F18AEB /* CourseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CourseTableViewCell.h; sourceTree = "<group>"; };
 		380E59D918B670E500F18AEB /* CourseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseTableViewCell.m; sourceTree = "<group>"; };
-		385E80B5189EE8F300E9766D /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		385E80B9189EE92000E9766D /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		385E80BA189EE92000E9766D /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		387359C918D0FCA50093132F /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
@@ -149,12 +152,12 @@
 				38D2D795189DB62E003FF499 /* CoreGraphics.framework in Frameworks */,
 				38BF3E4618AC7A9300C96105 /* Parse.framework in Frameworks */,
 				38D2D7DC189DBD9F003FF499 /* AudioToolbox.framework in Frameworks */,
-				385E80B6189EE8F300E9766D /* FacebookSDK.framework in Frameworks */,
 				38D2D7DA189DBD98003FF499 /* CFNetwork.framework in Frameworks */,
 				38D2D7D8189DBD54003FF499 /* QuartzCore.framework in Frameworks */,
 				38D2D7D3189DBA9D003FF499 /* MapKit.framework in Frameworks */,
 				38D2D7D1189DBA84003FF499 /* Social.framework in Frameworks */,
 				38D2D7C4189DB86F003FF499 /* FacebookSDK.framework in Frameworks */,
+				207EE65418D12592006F869D /* FacebookSDK.framework in Frameworks */,
 				38D2D797189DB62E003FF499 /* UIKit.framework in Frameworks */,
 				38D2D793189DB62E003FF499 /* Foundation.framework in Frameworks */,
 			);
@@ -173,6 +176,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		207EE65818D1291A006F869D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				207EE65918D12933006F869D /* SettingsView.h */,
+				207EE65A18D12933006F869D /* SettingsView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		38D2D786189DB62D003FF499 = {
 			isa = PBXGroup;
 			children = (
@@ -195,8 +207,8 @@
 		38D2D791189DB62E003FF499 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				207EE65318D12592006F869D /* FacebookSDK.framework */,
 				38BF3E4518AC7A9300C96105 /* Parse.framework */,
-				385E80B5189EE8F300E9766D /* FacebookSDK.framework */,
 				38D2D7E7189DBDF6003FF499 /* SystemConfiguration.framework */,
 				38D2D7E3189DBDE1003FF499 /* Security.framework */,
 				38D2D7E1189DBDD2003FF499 /* MobileCoreServices.framework */,
@@ -227,6 +239,7 @@
 				38D2D7A2189DB62E003FF499 /* AppDelegate.m */,
 				38D2D7A4189DB62E003FF499 /* Images.xcassets */,
 				38D2D7C6189DB9F0003FF499 /* ViewControllers */,
+				207EE65818D1291A006F869D /* Views */,
 				38D2D7C5189DB9E5003FF499 /* Objects */,
 				38D2D799189DB62E003FF499 /* Supporting Files */,
 			);
@@ -359,7 +372,7 @@
 				ORGANIZATIONNAME = jhurrayApps;
 				TargetAttributes = {
 					38D2D78E189DB62E003FF499 = {
-						DevelopmentTeam = 43LEM8BQ2H;
+						DevelopmentTeam = DBZ8A44563;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 0;
@@ -427,6 +440,7 @@
 				380E59D418B2FA8600F18AEB /* MyCoursesViewController.m in Sources */,
 				380E59DA18B670E500F18AEB /* CourseTableViewCell.m in Sources */,
 				38D2D7CF189DBA73003FF499 /* MapViewController.m in Sources */,
+				207EE65B18D12933006F869D /* SettingsView.m in Sources */,
 				380E59C218ADD2DE00F18AEB /* Course.m in Sources */,
 				38D2D79F189DB62E003FF499 /* main.m in Sources */,
 				387359D918D1198C0093132F /* MatchTableViewCell.m in Sources */,
@@ -562,6 +576,7 @@
 					"/Users/gregoryhurray/Desktop/repo-main/StudyBunny",
 					/Users/gregoryhurray/Documents,
 					/Users/gregoryhurray/Documents/FacebookSDK,
+					/Users/drhurd/Developer/iOS/StudyBunny,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Study Bunny/Study Bunny-Prefix.pch";
@@ -584,6 +599,7 @@
 					"/Users/gregoryhurray/Desktop/repo-main/StudyBunny",
 					/Users/gregoryhurray/Documents,
 					/Users/gregoryhurray/Documents/FacebookSDK,
+					/Users/drhurd/Developer/iOS/StudyBunny,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Study Bunny/Study Bunny-Prefix.pch";
