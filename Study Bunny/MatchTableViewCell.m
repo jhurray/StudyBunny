@@ -27,10 +27,11 @@
         [name setAdjustsFontSizeToFitWidth:YES];
         
         //matches config
-        matches = [[UILabel alloc] initWithFrame:CGRectMake(MATCHCELLHEIGHT/10, MATCHCELLHEIGHT/2+MATCHCELLHEIGHT/5, DEVICEWIDTH-20, MATCHCELLHEIGHT/4)];
+        matches = [[UILabel alloc] initWithFrame:CGRectMake(MATCHCELLHEIGHT/10, MATCHCELLHEIGHT/2+MATCHCELLHEIGHT/5, DEVICEWIDTH-40, MATCHCELLHEIGHT/4)];
         [matches setTextColor:[UIColor grayColor]];
         [matches setFont:[UIFont fontWithName:FONT size:16]];
-        [matches setAdjustsFontSizeToFitWidth:YES];
+        [matches setAdjustsFontSizeToFitWidth:NO];
+        
         [self addSubview:name];
         [self addSubview:matches];
     }
@@ -46,10 +47,10 @@
         Course *c = (Course *)matchedUser.matchedCourses[i];
         if(i == 0)
         {
-            matchesString = [NSString stringWithFormat:@"%@ %@", c.subject, c.catalogNum ];
+            matchesString = [NSString stringWithFormat:@"%@ %@", c.subjectCode, c.catalogNum ];
             continue;
         }
-        matchesString = [NSString stringWithFormat:@"%@, %@ %@", matchesString, c.subject, c.catalogNum];
+        matchesString = [NSString stringWithFormat:@"%@, %@ %@", matchesString, c.subjectCode, c.catalogNum];
     }
     [matches setText:matchesString];
 }
@@ -61,15 +62,17 @@
     if(selected)
     {
         // Configure the view for the selected state
-        [self setBackgroundColor:MAINCOLOR];
-        [name setTextColor:[UIColor lightGrayColor]];
+        [self.contentView setBackgroundColor:MAINCOLOR];
+        [matches setTextColor:[UIColor lightGrayColor]];
         [name setTextColor:[UIColor whiteColor]];
+        [self setAccessoryType:UITableViewCellAccessoryCheckmark];
     }
     else
     {
         [name setTextColor:MAINCOLOR];
-        [name setTextColor:[UIColor grayColor]];
-        [self setBackgroundColor:[UIColor clearColor]];
+        [matches setTextColor:[UIColor grayColor]];
+        [self.contentView setBackgroundColor:[UIColor clearColor]];
+        [self setAccessoryType:UITableViewCellAccessoryNone];
     }
 }
 

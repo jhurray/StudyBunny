@@ -119,6 +119,12 @@
     
 }
 
+-(void) tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    
+}
+
 -(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
@@ -153,6 +159,7 @@
     [cell.textLabel setAdjustsFontSizeToFitWidth:YES];
     MatchedUser *user = [matchedUsers objectAtIndex:indexPath.row];
     [cell setCellFeaturesWithMatchedUser:user];
+
     //cell.textLabel.text = [NSString stringWithFormat:@"%@ has %lu matches", user.name, user.matchedCourses.count];
     
     return cell;
