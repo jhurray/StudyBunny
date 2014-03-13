@@ -49,7 +49,7 @@
     UIButton *settingsBtn = [[UIButton alloc] initWithFrame:BARBUTTONFRAME];
     UIImage *settings = [UIImage imageNamed:@"settings.png"];
     [settingsBtn setImage:settings forState:UIControlStateNormal];
-    [settingsBtn addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
+    [settingsBtn addTarget:self action:@selector(settingsBtnHandler) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *settingsBarButton = [[UIBarButtonItem alloc] initWithCustomView:settingsBtn];
     self.navigationItem.rightBarButtonItem = settingsBarButton;
     
@@ -104,7 +104,8 @@
         }
         else if ([error.userInfo[FBErrorParsedJSONResponseKey][@"body"][@"error"][@"type"] isEqualToString:@"OAuthException"]) { // Since the request failed, we can check if it was due to an invalid session
             NSLog(@"The facebook session was invalidated");
-            [self logout];
+            [PFUser logOut];
+            [self.navigationController popToRootViewControllerAnimated:YES];
         } else {
             NSLog(@"Some other error: %@", error);
         }
@@ -114,27 +115,29 @@
 
 -(void) findMatches
 {
-    [self.navigationController pushViewController:[[MatchPickerViewController alloc] init] animated:NO];
+    [self.navigationController pushViewController:[[MatchPickerViewController alloc] init] animated:YES];
 }
 
 -(void)studyNow
 {
-    [self.navigationController pushViewController:[[MapViewController alloc] initWithNibName:nil bundle:nil] animated:NO];
+    [self.navigationController pushViewController:[[MapViewController alloc] initWithNibName:nil bundle:nil] animated:YES];
 }
 
 -(void)seeMyCourses
 {
-    [self.navigationController pushViewController:[[MyCoursesViewController alloc] init] animated:NO];
+    [self.navigationController pushViewController:[[MyCoursesViewController alloc] init] animated:YES];
 }
 
-
--(void)logout
+- (void)settingsBtnHandler
 {
-    [PFUser logOut]; // Log out
-    
-    // Return to login page
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    
+    SettingsViewController *settingsViewController = [[SettingsViewController alloc] init];
+    settingsViewController.delegate = self;
+    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:settingsViewController] animated:YES completion:NULL];
+}
+
+- (void)didLogout
+{
+    [self.navigationController popToRootViewControllerAnimated:NO];
 }
 
 - (void)didReceiveMemoryWarning
