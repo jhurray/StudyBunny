@@ -15,13 +15,12 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-    
-        [self setBackgroundColor:[UIColor clearColor]];
+        [self setBackgroundColor:SECONDARYCOLOR];
         [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.titleLabel setFont:[UIFont fontWithName:FONT size:24.0]];
         [self.titleLabel setAdjustsFontSizeToFitWidth:YES];
-        [self.layer setBorderColor:[UIColor whiteColor].CGColor];
-        [self.layer setBorderWidth:1];
+//        [self.layer setBorderColor:[UIColor whiteColor].CGColor];
+//        [self.layer setBorderWidth:1];
         [self.layer setCornerRadius:frame.size.height/5];
         [self addTarget:self action:@selector(highlight) forControlEvents:UIControlEventTouchDown];
         [self addTarget:self action:@selector(unhighlight) forControlEvents:UIControlEventTouchUpInside];
@@ -31,14 +30,12 @@
 }
 
 -(void)highlight{
-    [self setBackgroundColor:SECONDARYCOLOR];
-    [self setAlpha:0.9];
+    [self setBackgroundColor:TERTIARYCOLOR];
 }
 
 -(void)unhighlight{
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-        [self setBackgroundColor:[UIColor clearColor]];
-        [self setAlpha:1.0];
+        [self setBackgroundColor:SECONDARYCOLOR];
     } completion:^(BOOL finished) {
         
     } ];
