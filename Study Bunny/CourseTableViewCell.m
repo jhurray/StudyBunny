@@ -27,8 +27,8 @@
         [bottomView.titleLabel setFont:[UIFont fontWithName:FONT size:18]];
         [bottomView.titleLabel setAdjustsFontSizeToFitWidth:YES];
         [bottomView setTitle:@"Delete" forState:UIControlStateNormal];
-        [bottomView setBackgroundColor:MAINCOLOR];
-        [topView setBackgroundColor:[UIColor whiteColor]];
+        [bottomView setBackgroundColor:DELETECOLOR];
+        [topView setBackgroundColor:MAINCOLOR];
         [bottomView addTarget:self action:@selector(bottomViewTouched) forControlEvents:UIControlEventTouchUpInside];
         
         // NSLog(@"%f, %f, %f, %f", self.frame.origin.x,self.frame.origin.y, self.frame.size.height, self.frame.size.width );

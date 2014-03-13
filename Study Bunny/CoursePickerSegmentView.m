@@ -17,7 +17,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        [self setBackgroundColor:MAINCOLOR];
+        [self setBackgroundColor:TERTIARYCOLOR];
         CGFloat xOffset = 30;
         CGFloat yOFfset = 10;
         picker = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"School", @"Subject", @"Course", nil]];

@@ -53,6 +53,12 @@
     UIBarButtonItem *settingsBarButton = [[UIBarButtonItem alloc] initWithCustomView:settingsBtn];
     self.navigationItem.rightBarButtonItem = settingsBarButton;
     
+    UIButton *myCoursesBtn = [[UIButton alloc] initWithFrame:BARBUTTONFRAME];
+    UIImage *menuImg = [self changeImage:[UIImage imageNamed:@"mine.png"] toColor:[UIColor whiteColor]];
+    [myCoursesBtn setImage:menuImg forState:UIControlStateNormal];
+    [myCoursesBtn addTarget:self action:@selector(seeMyCourses) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *myCoursesBarButton = [[UIBarButtonItem alloc] initWithCustomView:myCoursesBtn];
+    self.navigationItem.leftBarButtonItem = myCoursesBarButton;
    
     UILabel *titleView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, NAVBARHEIGHT)];
     [titleView setBackgroundColor:[UIColor clearColor]];
@@ -124,12 +130,16 @@
 
 -(void)seeMyCourses
 {
-    [self.navigationController pushViewController:[[MyCoursesViewController alloc] init] animated:NO];
+    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:[[MyCoursesViewController alloc] init]] animated:YES completion:^{
+        
+    }];
 }
 
 
 -(void)logout
 {
+    
+    [[[LocationGetter sharedInstance] timer] invalidate];
     [PFUser logOut]; // Log out
     
     // Return to login page

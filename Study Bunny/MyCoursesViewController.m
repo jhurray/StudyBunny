@@ -38,7 +38,7 @@
     [self.navigationController.navigationBar setTranslucent:YES];
     
     UIImageView *bunnyBack = [[UIImageView alloc] initWithFrame:CGRectMake(0, 30, DEVICEWIDTH, DEVICEHEIGHT-20)];
-    [bunnyBack setImage:[self changeImage:[UIImage imageNamed:@"bunny.png"] toColor:SECONDARYCOLOR]];
+    [bunnyBack setImage:[self changeImage:[UIImage imageNamed:@"bunny.png"] toColor:TERTIARYCOLOR]];
     
     titleView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, NAVBARHEIGHT)];
     [titleView setBackgroundColor:[UIColor clearColor]];
@@ -50,7 +50,10 @@
     
     //bar button
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addClass)];
-    [self.navigationItem.rightBarButtonItem setTintColor:[UIColor whiteColor]];
+    [self.navigationItem.rightBarButtonItem setTintColor:MAINCOLOR];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(cancel)];
+    [self.navigationItem.leftBarButtonItem setTintColor:MAINCOLOR];
 
     //background view
     [self.view addSubview:bunnyBack];
@@ -73,7 +76,7 @@
     edit = [[UIButton alloc] initWithFrame:CGRectMake(0, DEVICEHEIGHT-btnHeight, DEVICEWIDTH, btnHeight)];
     [edit setTitle:@"Edit Courses" forState:UIControlStateNormal];
     [edit.titleLabel setFont:[UIFont fontWithName:FONT size:18.0]];
-    [edit setBackgroundColor:MAINCOLOR];
+    [edit setBackgroundColor:SECONDARYCOLOR];
     edit.tag = 0;
     [edit addTarget:self action:@selector(editClasses:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:edit];
@@ -84,7 +87,7 @@
             if([deathRow containsObject:c.parseId]){
                 [arr removeObject:c];
                 [c deleteFromParse];
-                NSLog(@"Dis nigga on the death row");
+                NSLog(@"Dis dude on the death row");
             }
         }
         myCourses = [arr mutableCopy];
@@ -97,6 +100,11 @@
 }
 
 // ----------------------------------------- SELECTOR METHODS  -----------------------------------------//
+
+-(void)cancel
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 -(void)editClasses:(UIButton *)sender
 {
@@ -238,7 +246,7 @@
     }
     [cell setBackgroundColor:[UIColor clearColor]];
     [cell setTintColor:SECONDARYCOLOR];
-    [cell.textLabel setTextColor:MAINCOLOR];
+    [cell.textLabel setTextColor:SECONDARYCOLOR];
     [cell.textLabel setFont:[UIFont fontWithName:FONT size:22]];
     [cell.textLabel setAdjustsFontSizeToFitWidth:YES];
     Course *course = [myCourses objectAtIndex:indexPath.row];

@@ -15,8 +15,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        [self setBackgroundColor:[UIColor whiteColor]];
-        [self setTextColor:[UIColor lightGrayColor]];
+        [self setBackgroundColor:SECONDARYCOLOR];
+        [self setTextColor:MAINCOLOR];
         [self setTextAlignment:NSTextAlignmentCenter];
         [self setFont:[UIFont fontWithName:FONT size:30]];
         //[self.layer setCornerRadius:5];

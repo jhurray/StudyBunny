@@ -48,7 +48,7 @@
     UILabel *prompt = [[UILabel alloc] initWithFrame:CGRectMake(15, DEVICEHEIGHT/10, DEVICEWIDTH-30, DEVICEHEIGHT/12)];
     [prompt setText:[NSString stringWithFormat:@"Study Bunny"]];
     [prompt setTextAlignment:NSTextAlignmentCenter];
-    [prompt setTextColor:[UIColor whiteColor]];
+    [prompt setTextColor:SECONDARYCOLOR];
     [prompt setFont:[UIFont fontWithName:FONT size:48.0]];
     [prompt setBackgroundColor:[UIColor clearColor]];
     [prompt setAdjustsFontSizeToFitWidth:YES];
@@ -83,7 +83,7 @@
     bunny = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, bunnyImgFrame, bunnyImgFrame)];
     [bunny setCenter:bunnyCircle.center];
     UIImage *bunnyImg = [UIImage imageNamed:@"bunny.png"];
-    [bunny setImage:[self changeImage:bunnyImg toColor:[UIColor whiteColor]]];
+    [bunny setImage:[self changeImage:bunnyImg toColor:MAINCOLOR]];
     [self.view addSubview:bunny];
     
     // add all subviews
@@ -118,7 +118,7 @@
             } else {
                 NSLog(@"Uh oh. An error occurred: \n\n%@", error);
             }
-        } else if (user.isNew) {
+        } else if (!user.isNew) {
             NSLog(@"User with facebook signed up and logged in!");
             
             //adding a column to user table

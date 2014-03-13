@@ -83,6 +83,8 @@ static LocationGetter *sharedClient;
     // let our delegate know we're done
     [delegate newLocation:newLocation];
     
+    
+    
     //save user
     PFGeoPoint *location = [PFGeoPoint geoPointWithLocation:newLocation];
     [[PFUser currentUser] setObject:location forKey:@"location"];

@@ -35,7 +35,7 @@
     [self.navigationController.navigationBar setTranslucent:YES];
     
     UIImageView *bunnyBack = [[UIImageView alloc] initWithFrame:CGRectMake(0, 30, DEVICEWIDTH, DEVICEHEIGHT-20)];
-    [bunnyBack setImage:[self changeImage:[UIImage imageNamed:@"bunny.png"] toColor:SECONDARYCOLOR]];
+    [bunnyBack setImage:[self changeImage:[UIImage imageNamed:@"bunny.png"] toColor:TERTIARYCOLOR]];
     
     titleView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, NAVBARHEIGHT)];
     [titleView setBackgroundColor:[UIColor clearColor]];
@@ -47,7 +47,7 @@
     
     CGFloat pickerViewHeight = 50;
     pickerView = [[CoursePickerSegmentView alloc] initWithFrame:CGRectMake(0, NAVBARHEIGHT+STATUSBARHEIGHT, DEVICEWIDTH, pickerViewHeight)];
-    [pickerView setAlpha:0.9];
+    [pickerView setAlpha:1.0];
     [pickerView.picker addTarget:self action:@selector(pickerChanged) forControlEvents:UIControlEventValueChanged];
     
     UIButton *checkBtn = [[UIButton alloc] initWithFrame:BARBUTTONFRAME];
@@ -87,6 +87,8 @@
 }
 
 // ----------------------------------------- SELECTOR METHODS  -----------------------------------------//
+
+
 
 -(void)pickerChanged
 {
@@ -251,7 +253,7 @@
     
     
     //2. Define the initial state (Before the animation)
-    cell.layer.shadowColor = MAINCOLOR.CGColor;
+    cell.layer.shadowColor = SECONDARYCOLOR.CGColor;
     cell.layer.shadowOffset = CGSizeMake(10, 10);
     cell.alpha = 0.7;
     
@@ -298,7 +300,7 @@
     }
     [cell setBackgroundColor:[UIColor clearColor]];
     [cell setTintColor:SECONDARYCOLOR];
-    [cell.textLabel setTextColor:MAINCOLOR];
+    [cell.textLabel setTextColor:SECONDARYCOLOR];
     [cell.textLabel setFont:[UIFont fontWithName:FONT size:22]];
     [cell.textLabel setAdjustsFontSizeToFitWidth:YES];
     //[cell.textLabel setTextAlignment:NSTextAlignmentCenter];

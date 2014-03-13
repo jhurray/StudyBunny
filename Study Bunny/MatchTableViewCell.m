@@ -22,13 +22,13 @@
         
         //name config
         name = [[UILabel alloc] initWithFrame:CGRectMake(MATCHCELLHEIGHT/10, MATCHCELLHEIGHT/10, DEVICEWIDTH*2/3, MATCHCELLHEIGHT/2)];
-        [name setTextColor:MAINCOLOR];
+        [name setTextColor:SECONDARYCOLOR];
         [name setFont:[UIFont fontWithName:FONT size:30]];
         [name setAdjustsFontSizeToFitWidth:YES];
         
         //matches config
         matches = [[UILabel alloc] initWithFrame:CGRectMake(MATCHCELLHEIGHT/10, MATCHCELLHEIGHT/2+MATCHCELLHEIGHT/5, DEVICEWIDTH-40, MATCHCELLHEIGHT/4)];
-        [matches setTextColor:[UIColor grayColor]];
+        [matches setTextColor:GRAYTEXTCOLOR];
         [matches setFont:[UIFont fontWithName:FONT size:16]];
         [matches setAdjustsFontSizeToFitWidth:NO];
         
@@ -62,15 +62,15 @@
     if(selected)
     {
         // Configure the view for the selected state
-        [self.contentView setBackgroundColor:MAINCOLOR];
-        [matches setTextColor:[UIColor lightGrayColor]];
+        [self.contentView setBackgroundColor:SECONDARYCOLOR];
+        [matches setTextColor:LIGHTGRAYTEXTCOLOR];
         [name setTextColor:[UIColor whiteColor]];
         [self setAccessoryType:UITableViewCellAccessoryCheckmark];
     }
     else
     {
-        [name setTextColor:MAINCOLOR];
-        [matches setTextColor:[UIColor grayColor]];
+        [name setTextColor:SECONDARYCOLOR];
+        [matches setTextColor:GRAYTEXTCOLOR];
         [self.contentView setBackgroundColor:[UIColor clearColor]];
         [self setAccessoryType:UITableViewCellAccessoryNone];
     }
