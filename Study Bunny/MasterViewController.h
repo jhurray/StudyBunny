@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SettingsViewController.h"
 
-@interface MasterViewController : UIViewController
+@interface MasterViewController : UIViewController <SettingsViewDelegate>
 
+@property (strong, nonatomic) SettingsViewController *settingsViewController;
 
 @end

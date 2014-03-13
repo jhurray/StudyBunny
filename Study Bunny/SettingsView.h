@@ -10,4 +10,7 @@
 
 @interface SettingsView : UIView
 
+@property (strong, nonatomic) SBButton *logoutBtn;
+
+
 @end
