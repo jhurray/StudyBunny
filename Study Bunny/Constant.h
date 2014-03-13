@@ -36,8 +36,9 @@
 
 // COLORS / FONTS
 
-#define MAINCOLOR [UIColor colorWithRed:52.0/255.0 green:73.0/255.0 blue:94.0/255.0 alpha:1.0]
-#define SECONDARYCOLOR [UIColor colorWithRed:107.0/255.0 green:185.0/255.0 blue:240.0/255.0 alpha:1.0]
+#define MAINCOLOR [UIColor whiteColor]
+#define SECONDARYCOLOR [UIColor colorWithRed:52.0/255.0 green:73.0/255.0 blue:94.0/255.0 alpha:0.8]
+#define TERTIARYCOLOR [UIColor colorWithRed:107.0/255.0 green:185.0/255.0 blue:240.0/255.0 alpha:0.7]
 #define FONT @"AppleSDGothicNeo-Light"
 
 #endif

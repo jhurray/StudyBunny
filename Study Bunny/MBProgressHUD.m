@@ -638,7 +638,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 	}
 
     // Set background rect color
-    self.color = MAINCOLOR;
+    self.color = SECONDARYCOLOR;
     if (self.color) {
         CGContextSetFillColorWithColor(context, self.color.CGColor);
     } else {

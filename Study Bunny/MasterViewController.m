@@ -37,11 +37,13 @@
     [[LocationGetter sharedInstance] startUpdates];
     
 	// Do any additional setup after loading the view.
+    
+    //nav bar
     self.navigationItem.hidesBackButton = YES;
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-    [self.navigationController.navigationBar setBarTintColor:SECONDARYCOLOR];
     [self.navigationController.navigationBar setTranslucent:YES];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    [self.navigationController.navigationBar setBarTintColor:SECONDARYCOLOR];
+    [self.navigationController.navigationBar setTintColor:MAINCOLOR];
     
     //nav bar buttons
     UIButton *settingsBtn = [[UIButton alloc] initWithFrame:BARBUTTONFRAME];
@@ -63,34 +65,15 @@
     
     [self.view setBackgroundColor:MAINCOLOR];
 
-    
-    UILabel *helloWorld = [[UILabel alloc] initWithFrame:CGRectMake(15, DEVICEHEIGHT/8, DEVICEWIDTH-30, DEVICEHEIGHT/12)];
-    [helloWorld setText:[NSString stringWithFormat:@"Hello!"]];
-    [helloWorld setTextAlignment:NSTextAlignmentCenter];
-    [helloWorld setTextColor:[UIColor whiteColor]];
-    [helloWorld setFont:[UIFont fontWithName:FONT size:24.0]];
-    [helloWorld setBackgroundColor:[UIColor clearColor]];
-    [helloWorld setAdjustsFontSizeToFitWidth:YES];
-    [self.view addSubview:helloWorld];
-    
-    UILabel *prompt = [[UILabel alloc] initWithFrame:CGRectMake(15, DEVICEHEIGHT/8 + DEVICEHEIGHT/12-10, DEVICEWIDTH-30, DEVICEHEIGHT/12)];
-    [prompt setText:[NSString stringWithFormat:@"Ready to Study?"]];
-    [prompt setTextAlignment:NSTextAlignmentCenter];
-    [prompt setTextColor:[UIColor whiteColor]];
-    [prompt setFont:[UIFont fontWithName:FONT size:24.0]];
-    [prompt setBackgroundColor:[UIColor clearColor]];
-    [prompt setAdjustsFontSizeToFitWidth:YES];
-    [self.view addSubview:prompt];
-    
     CGFloat bunnyFrame = 145;
-    UIView *orangeCircle = [[UIView alloc] initWithFrame:CGRectMake((DEVICEWIDTH-bunnyFrame)/2, DEVICEHEIGHT/3-20, bunnyFrame, bunnyFrame)];
-    [orangeCircle setBackgroundColor:SECONDARYCOLOR];
-    [orangeCircle.layer setCornerRadius:bunnyFrame/2];
-    [self.view addSubview:orangeCircle];
+    UIView *bunnyCircle = [[UIView alloc] initWithFrame:CGRectMake((DEVICEWIDTH-bunnyFrame)/2, DEVICEHEIGHT/3-20, bunnyFrame, bunnyFrame)];
+    [bunnyCircle setBackgroundColor:SECONDARYCOLOR];
+    [bunnyCircle.layer setCornerRadius:bunnyFrame/2];
+    [self.view addSubview:bunnyCircle];
     
     CGFloat bunnyImgFrame = 100;
     UIImageView *bunny = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, bunnyImgFrame, bunnyImgFrame)];
-    [bunny setCenter:orangeCircle.center];
+    [bunny setCenter:bunnyCircle.center];
     UIImage *bunnyImg = [UIImage imageNamed:@"bunny.png"];
     [bunny setImage:[self changeImage:bunnyImg toColor:[UIColor whiteColor]]];
     [self.view addSubview:bunny];
@@ -117,14 +100,7 @@
     // Send request to Facebook
     [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
         if (!error) {
-            // result is a dictionary with the user's Facebook data
-            NSDictionary *userData = (NSDictionary *)result;
-            NSString *name = userData[@"name"];
             NSLog(@"Succesful facebook request!\n");
-            //animate name change
-            [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-                [helloWorld setText:[NSString stringWithFormat:@"Hello %@!", name]];
-            } completion:nil];
         }
         else if ([error.userInfo[FBErrorParsedJSONResponseKey][@"body"][@"error"][@"type"] isEqualToString:@"OAuthException"]) { // Since the request failed, we can check if it was due to an invalid session
             NSLog(@"The facebook session was invalidated");
