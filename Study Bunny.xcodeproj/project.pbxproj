@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		207EE65418D12592006F869D /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 207EE65318D12592006F869D /* FacebookSDK.framework */; };
 		207EE65B18D12933006F869D /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 207EE65A18D12933006F869D /* SettingsView.m */; };
+		207EE65E18D1378F006F869D /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 207EE65D18D1378F006F869D /* SettingsViewController.m */; };
 		380E59C218ADD2DE00F18AEB /* Course.m in Sources */ = {isa = PBXBuildFile; fileRef = 380E59C118ADD2DE00F18AEB /* Course.m */; };
 		380E59C518ADDE3500F18AEB /* SBButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 380E59C418ADDE3500F18AEB /* SBButton.m */; };
 		380E59C718ADE41C00F18AEB /* bunny.png in Resources */ = {isa = PBXBuildFile; fileRef = 380E59C618ADE41C00F18AEB /* bunny.png */; };
@@ -70,6 +71,8 @@
 		207EE65318D12592006F869D /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		207EE65918D12933006F869D /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
 		207EE65A18D12933006F869D /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
+		207EE65C18D1378F006F869D /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		207EE65D18D1378F006F869D /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		380E59C018ADD2DE00F18AEB /* Course.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Course.h; sourceTree = "<group>"; };
 		380E59C118ADD2DE00F18AEB /* Course.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Course.m; sourceTree = "<group>"; };
 		380E59C318ADDE3500F18AEB /* SBButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBButton.h; sourceTree = "<group>"; };
@@ -320,6 +323,8 @@
 				387359D218D1086B0093132F /* MatchPickerViewController.m */,
 				380E59D218B2FA8500F18AEB /* MyCoursesViewController.h */,
 				380E59D318B2FA8600F18AEB /* MyCoursesViewController.m */,
+				207EE65C18D1378F006F869D /* SettingsViewController.h */,
+				207EE65D18D1378F006F869D /* SettingsViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -437,6 +442,7 @@
 				380E59CA18ADEA2B00F18AEB /* CoursePickerViewController.m in Sources */,
 				385E80BB189EE92000E9766D /* MBProgressHUD.m in Sources */,
 				38D2D7A3189DB62E003FF499 /* AppDelegate.m in Sources */,
+				207EE65E18D1378F006F869D /* SettingsViewController.m in Sources */,
 				380E59D418B2FA8600F18AEB /* MyCoursesViewController.m in Sources */,
 				380E59DA18B670E500F18AEB /* CourseTableViewCell.m in Sources */,
 				38D2D7CF189DBA73003FF499 /* MapViewController.m in Sources */,
