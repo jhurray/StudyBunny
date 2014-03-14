@@ -98,9 +98,18 @@
 
 
 
--(void)contactRequest
+-(void)contactRequest:(BOOL)byPhone withContactInfo:(NSString *)info
 {
     NSLog(@"CONTACT REQUEST PRESSED!!");
+    
+    
+    if (byPhone) {
+        [self showSMS:info];
+    }
+    else
+    {
+        [self sendEmailTo:info];
+    }
 }
 
 -(void)blockRequest
@@ -108,18 +117,65 @@
      NSLog(@"BLOCK REQUEST PRESSED!!");
 }
 
-/*
-- (void)sendEmail{
+// *************************************** SEND TEXT ****************************************************//
+
+- (void)showSMS:(NSString*)number {
+    
+    if(![MFMessageComposeViewController canSendText]) {
+        UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Your device doesn't support SMS!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [warningAlert show];
+        return;
+    }
+    
+    NSArray *recipents = [NSArray arrayWithObject:number];
+    NSString *message = [NSString stringWithFormat:@"Message from %@, a match on Study Bunny:\n\n", [[PFUser currentUser] objectForKey:@"name"] ];
+    
+    MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
+    messageController.messageComposeDelegate = self;
+    [messageController setRecipients:recipents];
+    [messageController setBody:message];
+    
+    // Present message view controller on screen
+    [self presentViewController:messageController animated:YES completion:nil];
+}
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult) result
+{
+    switch (result) {
+        case MessageComposeResultCancelled:
+            break;
+            
+        case MessageComposeResultFailed:
+        {
+            UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Failed to send SMS!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [warningAlert show];
+            break;
+        }
+            
+        case MessageComposeResultSent:
+            break;
+            
+        default:
+            break;
+    }
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+// *************************************** SEND EMAIL ****************************************************//
+
+- (void)sendEmailTo:(NSString *)address{
     NSLog(@"So you want to email...");
     if ([MFMailComposeViewController canSendMail])
     {
         NSLog(@"Well now you can start!");
         MFMailComposeViewController *mailViewController = [[MFMailComposeViewController alloc] init];
         mailViewController.mailComposeDelegate = self;
-        [mailViewController setSubject:@"Join in the issue!"];
-        mailViewController.navigationBar.barStyle = UIBarStyleBlack;
+        [mailViewController setSubject:@"Lets Study!"];
+        [mailViewController setToRecipients:[NSArray arrayWithObject:address]];
+        //mailViewController.navigationBar.barStyle = UIBarStyleBlack;
         mailViewController.navigationItem.rightBarButtonItem.style = UIBarButtonItemStylePlain;
-        //[mailViewController setMessageBody:[NSString stringWithFormat:@"I would like you to join my issue, %@, on SoapBox.\n\n%s", //issueView.issue.title, APP_LINK] isHTML:NO];
+        [mailViewController setMessageBody:[NSString stringWithFormat:@"Message from %@, a match on Study Bunny:\n\n", [[PFUser currentUser] objectForKey:@"name"] ] isHTML:NO];
         [self presentViewController:mailViewController animated:YES completion:^{
             NSLog(@"GOGOGO!");
         }];
@@ -145,13 +201,12 @@
 
 -(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error{
     [self dismissViewControllerAnimated:YES completion:nil];
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
     
     if(result == MFMailComposeResultCancelled){
         return;
     }
-    
-    //[self updateIssueMetric:issueView.issue withVal:3];
+    NSLog(@"Succesful email sent!");
 }
 
 - (void)canceled{
@@ -159,7 +214,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
 }
-*/
+
 
 
 // ------------------------------------------ MATCH MAKER DELEGATE METHODS ---------------------------------//

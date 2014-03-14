@@ -43,15 +43,15 @@
 
 -(void)getStudyMatchesForSubjectCodes:(NSArray *)subCodes andCatalogNums:(NSArray *)catNums
 {
-    madeMatches = [[[PFUser currentUser] objectForKey:@"madeMatches"] mutableCopy];
-    pendingMatches = [[[PFUser currentUser] objectForKey:@"pendingMatches"] mutableCopy];
+    madeMatches = [NSMutableArray arrayWithArray:[[PFUser currentUser] objectForKey:@"madeMatches"] ];
+    pendingMatches = [NSMutableArray arrayWithArray:[[PFUser currentUser] objectForKey:@"pendingMatches"] ];
     
     PFQuery *q = [PFQuery queryWithClassName:@"Course"];
     [q whereKey:@"subjectCode" containedIn:subCodes];
     [q whereKey:@"catalogNum" containedIn:catNums];
     [q whereKey:@"owner" notEqualTo:[PFUser currentUser].objectId];
     // so that no made matches come up
-    [q whereKey:@"objectId" notContainedIn:madeMatches];
+    //[q whereKey:@"objectId" notContainedIn:madeMatches];
     [q findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         // do user query and push that shit into Matches
         if (error) {

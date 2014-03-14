@@ -77,7 +77,7 @@
 
 -(void)contactBtnTouched
 {
-    [delegate contactRequest];
+    [delegate contactRequest:self.contactByPhone withContactInfo:self.contactInfo];
 }
 
 -(void)blockBtnTouched
@@ -117,6 +117,14 @@
     [name setText:matchedUser.name];
     [matches setText: [matchedUser getConcatenatedCourses]];
     self.fbId = matchedUser.fbId;
+    self.contactByPhone = [matchedUser contactByPhone];
+    if(self.contactByPhone)
+    {
+        self.contactInfo = matchedUser.phone;
+    }
+    else{
+        self.contactInfo = matchedUser.email;
+    }
     [self loadPicforImageView];
 }
 

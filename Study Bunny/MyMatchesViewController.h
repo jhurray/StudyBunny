@@ -14,7 +14,7 @@
 #import <MessageUI/MFMailComposeViewController.h>
 #import <MessageUI/MFMessageComposeViewController.h>
 
-@interface MyMatchesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, SBMatchMakerDelegate, MyMatchTableViewCellDelegate, MFMailComposeViewControllerDelegate>
+@interface MyMatchesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, SBMatchMakerDelegate, MyMatchTableViewCellDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UILabel *titleView;

@@ -760,13 +760,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Study Bunny/MyMatchesViewController.m"
-            timestampString = "416455450.695794"
+            timestampString = "416498352.30373"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
-            landmarkName = "@implementation MyMatchesViewController"
-            landmarkType = "3">
+            startingLineNumber = "189"
+            endingLineNumber = "189"
+            landmarkName = "-sendEmailTo:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -782,6 +782,22 @@
             startingLineNumber = "140"
             endingLineNumber = "140"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Study Bunny/MyMatchesViewController.m"
+            timestampString = "416498515.543665"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "171"
+            endingLineNumber = "171"
+            landmarkName = "-sendEmailTo:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

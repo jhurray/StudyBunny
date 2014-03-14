@@ -92,12 +92,12 @@
     [studyNow addTarget:self action:@selector(studyNow) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:studyNow];
     
-    SBButton *findMatches = [[SBButton alloc] initWithFrame:CGRectMake(60, 3*DEVICEHEIGHT/5+buttonOffset, 200, buttonHeight)];
+    SBButton *findMatches = [[SBButton alloc] initWithFrame:CGRectMake(60, 3*DEVICEHEIGHT/5+2*buttonOffset, 200, buttonHeight)];
     [findMatches setTitle:@"Find Matches" forState:UIControlStateNormal];
     [findMatches addTarget:self action:@selector(findMatches) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:findMatches];
     
-    SBButton *myMatches = [[SBButton alloc] initWithFrame:CGRectMake(60, 3*DEVICEHEIGHT/5+2*buttonOffset, 200, buttonHeight)];
+    SBButton *myMatches = [[SBButton alloc] initWithFrame:CGRectMake(60, 3*DEVICEHEIGHT/5+buttonOffset, 200, buttonHeight)];
     [myMatches setTitle:@"My Matches" forState:UIControlStateNormal];
     [myMatches addTarget:self action:@selector(seeMyMatches) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:myMatches];

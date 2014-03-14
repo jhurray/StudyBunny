@@ -11,7 +11,7 @@
 
 @protocol MyMatchTableViewCellDelegate <NSObject>
 
--(void)contactRequest;
+-(void)contactRequest:(BOOL)byPhone withContactInfo:(NSString *)info;
 -(void)blockRequest;
 
 @end
@@ -27,7 +27,10 @@
 @property (nonatomic, strong) UILabel *mutualFriends;
 @property (nonatomic, strong) UIButton *contact;
 @property (nonatomic, strong) UIButton *block;
+@property (nonatomic, strong) NSString *contactInfo;
 
+
+@property BOOL contactByPhone;
 
 -(void)setCellFeaturesWithMatchedUser:(MatchedUser *)matchedUser;
 
