@@ -1,19 +1,19 @@
 //
-//  MatchPickerViewController.m
+//  MyMatchesViewController.m
 //  Study Bunny
 //
-//  Created by Gregoire on 3/12/14.
+//  Created by Gregoire on 3/13/14.
 //  Copyright (c) 2014 jhurrayApps. All rights reserved.
 //
 
-#import "MatchPickerViewController.h"
-#import "MatchTableViewCell.h"
+#import "MyMatchesViewController.h"
 
-@interface MatchPickerViewController ()
+@interface MyMatchesViewController ()
 
 @end
 
-@implementation MatchPickerViewController
+@implementation MyMatchesViewController
+
 @synthesize tableView = _tableView, titleView, myCourses, matcher, matchedUsers;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -42,7 +42,7 @@
     
     titleView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, NAVBARHEIGHT)];
     [titleView setBackgroundColor:[UIColor clearColor]];
-    [titleView setText:@"Find Matches"];
+    [titleView setText:@"My Matches"];
     [titleView setFont:[UIFont fontWithName:FONT size:20.0]];
     [titleView setTextAlignment:NSTextAlignmentCenter];
     [titleView setTextColor:[UIColor whiteColor]];
@@ -58,14 +58,14 @@
     [_tableView setTintColor:TERTIARYCOLOR];
     [_tableView setDataSource:self];
     [_tableView setDelegate:self];
-    [_tableView registerClass:[MatchTableViewCell class] forCellReuseIdentifier:@"MatchCell"];
+    [_tableView registerClass:[MyMatchesTableViewCell class] forCellReuseIdentifier:@"MyMatchCell"];
     [self.view addSubview:_tableView];
     
     // match maker goes here
     matcher = [[SBMatchMaker alloc] init];
     matcher.delegate = self;
     [matcher getMatches];
-
+    
     [MBProgressHUD showHUDAddedTo:self.view withText:@"Finding Matches..."];
     
 }
@@ -75,7 +75,7 @@
 -(void)fetchMatchedUsers
 {
     PFQuery *q = [PFUser query];
-    [q whereKey:@"objectId" containedIn:matcher.userMatches];
+    [q whereKey:@"objectId" containedIn:[NSArray arrayWithArray:[[PFUser currentUser] objectForKey:@"madeMatches" ]]];
     [q orderByAscending:@"name"];
     [q findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (error) {
@@ -85,10 +85,6 @@
         NSLog(@"\nuser objects count is %lu\n", (unsigned long)objects.count);
         for (PFUser *u in objects)
         {
-            // DELETE THIS BLOCK EVENTUALLY
-            if ([matcher.madeMatches containsObject:u.objectId] ) {
-                continue;
-            }
             MatchedUser *mu = [[MatchedUser alloc] initWithPFUser:u];
             mu.matchedCourses = [matcher.usersMappedToCourses objectForKey:mu.userId];
             [matchedUsers addObject:mu];
@@ -97,6 +93,74 @@
         [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
 }
+
+// ------------------------------------------ MY MATCHES TVC DELEGATE METHODS ---------------------------------//
+
+
+
+-(void)contactRequest
+{
+    NSLog(@"CONTACT REQUEST PRESSED!!");
+}
+
+-(void)blockRequest
+{
+     NSLog(@"BLOCK REQUEST PRESSED!!");
+}
+
+/*
+- (void)sendEmail{
+    NSLog(@"So you want to email...");
+    if ([MFMailComposeViewController canSendMail])
+    {
+        NSLog(@"Well now you can start!");
+        MFMailComposeViewController *mailViewController = [[MFMailComposeViewController alloc] init];
+        mailViewController.mailComposeDelegate = self;
+        [mailViewController setSubject:@"Join in the issue!"];
+        mailViewController.navigationBar.barStyle = UIBarStyleBlack;
+        mailViewController.navigationItem.rightBarButtonItem.style = UIBarButtonItemStylePlain;
+        //[mailViewController setMessageBody:[NSString stringWithFormat:@"I would like you to join my issue, %@, on SoapBox.\n\n%s", //issueView.issue.title, APP_LINK] isHTML:NO];
+        [self presentViewController:mailViewController animated:YES completion:^{
+            NSLog(@"GOGOGO!");
+        }];
+    }
+    else
+    {
+        UIAlertView *alertView = [[UIAlertView alloc]
+                                  initWithTitle:@"Sorry"
+                                  message:@"Cant Send Email Right Now."
+                                  delegate:self
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+        [alertView show];
+    }
+}
+
+
+- (void)finishedWithEmail:(NSString *)email body:(NSString *)body {
+    
+    
+}
+
+
+-(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error{
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
+    
+    if(result == MFMailComposeResultCancelled){
+        return;
+    }
+    
+    //[self updateIssueMetric:issueView.issue withVal:3];
+}
+
+- (void)canceled{
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
+}
+*/
+
 
 // ------------------------------------------ MATCH MAKER DELEGATE METHODS ---------------------------------//
 
@@ -121,91 +185,6 @@
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    MatchTableViewCell *cell = (MatchTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-    
-    if (cell.reentering) {
-        return;
-    }
-    
-    MatchedUser *matchedUser= ((MatchedUser *)[matchedUsers objectAtIndex:indexPath.row]);
-    PFUser *me = [PFUser currentUser];
-    
-    if(cell.matchMade)
-    {
-        NSLog(@"\nIn cell selected: \nPending matches: %@\n\n made matches: %@\n\n", matchedUser.pendingMatches, matchedUser.madeMatches);
-        if([matchedUser.pendingMatches containsObject:[PFUser currentUser].objectId])
-        {
-            //this is a made match!!! make it...
-            //change mine
-            [matcher.pendingMatches removeObject:matchedUser.userId];
-            [matcher.madeMatches addObject:matchedUser.userId];
-            //then change theirs
-            [matchedUser.pendingMatches removeObject:me.objectId];
-            [matchedUser.madeMatches addObject:me.objectId];
-            //now save them
-            [matchedUser saveAsPFUser];
-            // now save me
-            [me setObject:matcher.pendingMatches forKey:@"pendingMatches"];
-            [me setObject:matcher.madeMatches forKey:@"madeMatches"];
-            [me saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                if(error)
-                {
-                    NSLog(@"Error saving myself after match... %@", error.localizedDescription);
-                    return;
-                }
-                NSLog(@"Succesful made match save for myself!!!");
-                PFObject *match = [PFObject objectWithClassName:@"Match"];
-                [match setObject:me.objectId forKey:@"uid1"];
-                [match setObject:matchedUser.userId forKey:@"uid2"];
-                [match saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                    if(error)
-                    {
-                        NSLog(@"Error saving myself after match... %@", error.localizedDescription);
-                        return;
-                    }
-                    NSLog(@"Succesful save of match!!!");
-                    [matchedUsers removeObject:matchedUser];
-                    [_tableView reloadData];
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Congratulations!"
-                                                                    message:[NSString stringWithFormat:@"You are matched with %@!", matchedUser.name]
-                                                                   delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-                    [alert show];
-                }];
-            }];
-        }
-        else
-        {
-            // I am the first to make a match.... put into pending matches for me
-            [matcher.pendingMatches addObject:matchedUser.userId];
-            [me setObject:matcher.pendingMatches forKey:@"pendingMatches"];
-            [me saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                if(error)
-                {
-                    NSLog(@"Error saving myself after pending match... %@", error.localizedDescription);
-                    return;
-                }
-                NSLog(@"Succesful pending match save for myself!!!");
-            }];
-        }
-        
-    }
-    else{
-        
-        // delete the shit!!!!
-        // I am the first to make a match.... put into pending matches for me
-        [matcher.pendingMatches removeObject:matchedUser.userId];
-        [me setObject:matcher.pendingMatches forKey:@"pendingMatches"];
-        [me saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            if(error)
-            {
-                NSLog(@"Error saving myself after deleting pending match... %@", error.localizedDescription);
-                return;
-            }
-            NSLog(@"Succesful pending match delete for myself!!!");
-        }];
-        
-    }
-    
 }
 
 -(void) tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -215,23 +194,13 @@
 }
 
 -(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    MatchTableViewCell *mCell = (MatchTableViewCell *)cell;
-    MatchedUser *user = [matchedUsers objectAtIndex:indexPath.row];
-    
-    //NSLog(@"\nIn Will display cell: \nPending matches: %@\n\n made matches: %@\n\n", matcher.pendingMatches, matcher.madeMatches);
-    
-    if ([matcher.pendingMatches containsObject:user.userId]) {
-        mCell.matchMade = TRUE;
-        [mCell makeHighlighted];
-    }
-    mCell.reentering = FALSE;
+{    
+
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return MATCHCELLHEIGHT;
+    return MYMATCHCELLHEIGHT;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -248,25 +217,19 @@
     
     static NSString *CellIdentifier = @"MatchCell";
     
-    MatchTableViewCell *cell = (MatchTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    MyMatchesTableViewCell *cell = (MyMatchesTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(cell == nil){
-        cell = [[MatchTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[MyMatchesTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        [cell setDelegate:self];
     }
     [cell setBackgroundColor:[UIColor clearColor]];
     [cell setTintColor:TERTIARYCOLOR];
     [cell.textLabel setAdjustsFontSizeToFitWidth:YES];
     MatchedUser *user = [matchedUsers objectAtIndex:indexPath.row];
     [cell setCellFeaturesWithMatchedUser:user];
-    cell.reentering = TRUE;
-    NSLog(@"\nIn CELL FOR ROW: \nPending matches: %@\n\n made matches: %@\n\n", matcher.pendingMatches, matcher.madeMatches);
-    if ([matcher.pendingMatches containsObject:user.userId]) {
-        cell.matchMade = TRUE;
-    }
-    if (cell.matchMade) {
-        [cell makeHighlighted];
-    }
-    
 
+    
+    
     //cell.textLabel.text = [NSString stringWithFormat:@"%@ has %lu matches", user.name, user.matchedCourses.count];
     
     return cell;
@@ -296,6 +259,4 @@
                                                 scale:1.0 orientation: UIImageOrientationDownMirrored];
     return flippedImage;
 }
-
-
 @end

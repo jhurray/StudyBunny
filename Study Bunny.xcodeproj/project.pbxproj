@@ -56,6 +56,10 @@
 		38D2D7E4189DBDE1003FF499 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38D2D7E3189DBDE1003FF499 /* Security.framework */; };
 		38D2D7E8189DBDF6003FF499 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38D2D7E7189DBDF6003FF499 /* SystemConfiguration.framework */; };
 		38DC6B3218D18B1400E6EDA7 /* SBContactView.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DC6B3118D18B1400E6EDA7 /* SBContactView.m */; };
+		38FD0D6918D28F3F00746261 /* MyMatchesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38FD0D6818D28F3F00746261 /* MyMatchesViewController.m */; };
+		38FD0D6C18D2938D00746261 /* MyMatchesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38FD0D6B18D2938D00746261 /* MyMatchesTableViewCell.m */; };
+		38FD0D6E18D2A1F400746261 /* hollowMenu.png in Resources */ = {isa = PBXBuildFile; fileRef = 38FD0D6D18D2A1F400746261 /* hollowMenu.png */; };
+		38FD0D7018D2A3D400746261 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38FD0D6F18D2A3D400746261 /* MessageUI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +147,12 @@
 		38D2D7E7189DBDF6003FF499 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		38DC6B3018D18B1400E6EDA7 /* SBContactView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBContactView.h; sourceTree = "<group>"; };
 		38DC6B3118D18B1400E6EDA7 /* SBContactView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBContactView.m; sourceTree = "<group>"; };
+		38FD0D6718D28F3F00746261 /* MyMatchesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyMatchesViewController.h; sourceTree = "<group>"; };
+		38FD0D6818D28F3F00746261 /* MyMatchesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyMatchesViewController.m; sourceTree = "<group>"; };
+		38FD0D6A18D2938D00746261 /* MyMatchesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyMatchesTableViewCell.h; sourceTree = "<group>"; };
+		38FD0D6B18D2938D00746261 /* MyMatchesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyMatchesTableViewCell.m; sourceTree = "<group>"; };
+		38FD0D6D18D2A1F400746261 /* hollowMenu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hollowMenu.png; sourceTree = "<group>"; };
+		38FD0D6F18D2A3D400746261 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +160,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38FD0D7018D2A3D400746261 /* MessageUI.framework in Frameworks */,
 				38D2D7E8189DBDF6003FF499 /* SystemConfiguration.framework in Frameworks */,
 				38D2D7E4189DBDE1003FF499 /* Security.framework in Frameworks */,
 				38D2D7E2189DBDD2003FF499 /* MobileCoreServices.framework in Frameworks */,
@@ -213,6 +224,7 @@
 		38D2D791189DB62E003FF499 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				38FD0D6F18D2A3D400746261 /* MessageUI.framework */,
 				207EE65318D12592006F869D /* FacebookSDK.framework */,
 				38BF3E4518AC7A9300C96105 /* Parse.framework */,
 				38D2D7E7189DBDF6003FF499 /* SystemConfiguration.framework */,
@@ -240,6 +252,7 @@
 				380E59CB18AEC97A00F18AEB /* check.png */,
 				380E59CC18AEC97B00F18AEB /* cross.png */,
 				387359C918D0FCA50093132F /* settings.png */,
+				38FD0D6D18D2A1F400746261 /* hollowMenu.png */,
 				380E59C618ADE41C00F18AEB /* bunny.png */,
 				38D2D7A1189DB62E003FF499 /* AppDelegate.h */,
 				38D2D7A2189DB62E003FF499 /* AppDelegate.m */,
@@ -309,6 +322,8 @@
 				38BF3E4318AC526400C96105 /* UMAPIManager.m */,
 				38DC6B3018D18B1400E6EDA7 /* SBContactView.h */,
 				38DC6B3118D18B1400E6EDA7 /* SBContactView.m */,
+				38FD0D6A18D2938D00746261 /* MyMatchesTableViewCell.h */,
+				38FD0D6B18D2938D00746261 /* MyMatchesTableViewCell.m */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -330,6 +345,8 @@
 				380E59D318B2FA8600F18AEB /* MyCoursesViewController.m */,
 				207EE65C18D1378F006F869D /* SettingsViewController.h */,
 				207EE65D18D1378F006F869D /* SettingsViewController.m */,
+				38FD0D6718D28F3F00746261 /* MyMatchesViewController.h */,
+				38FD0D6818D28F3F00746261 /* MyMatchesViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -421,6 +438,7 @@
 				380E59CE18AEC97B00F18AEB /* cross.png in Resources */,
 				38D2D79D189DB62E003FF499 /* InfoPlist.strings in Resources */,
 				38D2D7A5189DB62E003FF499 /* Images.xcassets in Resources */,
+				38FD0D6E18D2A1F400746261 /* hollowMenu.png in Resources */,
 				380E59CD18AEC97B00F18AEB /* check.png in Resources */,
 				380E59C718ADE41C00F18AEB /* bunny.png in Resources */,
 			);
@@ -452,11 +470,13 @@
 				380E59D418B2FA8600F18AEB /* MyCoursesViewController.m in Sources */,
 				380E59DA18B670E500F18AEB /* CourseTableViewCell.m in Sources */,
 				38D2D7CF189DBA73003FF499 /* MapViewController.m in Sources */,
+				38FD0D6918D28F3F00746261 /* MyMatchesViewController.m in Sources */,
 				207EE65B18D12933006F869D /* SettingsView.m in Sources */,
 				380E59C218ADD2DE00F18AEB /* Course.m in Sources */,
 				38D2D79F189DB62E003FF499 /* main.m in Sources */,
 				387359D918D1198C0093132F /* MatchTableViewCell.m in Sources */,
 				388BBA2A18CF58830070EC5F /* SBTextField.m in Sources */,
+				38FD0D6C18D2938D00746261 /* MyMatchesTableViewCell.m in Sources */,
 				388BBA2D18D0D48C0070EC5F /* SBMatchMaker.m in Sources */,
 				387359D318D1086B0093132F /* MatchPickerViewController.m in Sources */,
 				38D2D7C9189DBA42003FF499 /* LoginViewController.m in Sources */,

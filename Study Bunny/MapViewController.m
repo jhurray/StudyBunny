@@ -99,7 +99,7 @@
             NSLog(@"Error: failed fetching matched users %@\n", error.localizedDescription);
             return;
         }
-        NSLog(@"\nuser objects count is %lu\n", objects.count);
+        NSLog(@"\nuser objects count is %lu\n", (unsigned long)objects.count);
         for (PFUser *u in objects)
         {
             if ([matcher.madeMatches containsObject:u.objectId] ) {
@@ -110,7 +110,7 @@
             [matchedUsers addObject:mu];
             MKPointAnnotation *ann = [[MKPointAnnotation alloc] init];
             [ann setCoordinate:mu.coord];
-            [ann setTitle:mu.name];
+            [ann setTitle:mu.name];  
             [ann setSubtitle:[mu getConcatenatedCourses]];
             [map addAnnotation:ann];
         }

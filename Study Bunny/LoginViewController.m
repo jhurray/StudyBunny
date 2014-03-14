@@ -119,7 +119,7 @@
             } else {
                 NSLog(@"Uh oh. An error occurred: \n\n%@", error);
             }
-        } else if (user.isNew) {
+        } else if (!user.isNew) {
             NSLog(@"User with facebook signed up and logged in!");
             
             //adding a column to user table
@@ -228,7 +228,8 @@
             [[PFUser currentUser] setObject:userData[@"name"] forKey:@"name"];
             [[PFUser currentUser] setObject:phoneNum forKey:@"phoneNumber"];
             [[PFUser currentUser] setObject:email forKey:@"email"];
-            
+            [[PFUser currentUser] setObject:[NSArray array] forKey:@"madeMatches"];
+            [[PFUser currentUser] setObject:[NSArray array] forKey:@"pendingMatches"];
             [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if(succeeded){
                     NSLog(@"successful save!!");

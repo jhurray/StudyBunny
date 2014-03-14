@@ -11,11 +11,17 @@
 @interface MatchedUser : NSObject
 
 @property (nonatomic, strong) NSArray *matchedCourses;
+@property (nonatomic, strong) NSMutableArray *pendingMatches;
+@property (nonatomic, strong) NSMutableArray *madeMatches;
 @property (nonatomic, strong) NSString *userId;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *fbId;
+@property (nonatomic, strong) NSString *email;
+@property (nonatomic, strong) NSString *phone;
 @property CLLocationCoordinate2D coord;
+@property BOOL contactByPhone;
 @property BOOL online;
+@property (nonatomic, strong) PFUser *userPtr;
 
 
 //0 = unmatched
@@ -24,5 +30,7 @@
 
 -(NSString *)getConcatenatedCourses;
 -(id)initWithPFUser:(PFUser *)user;
+-(void)saveAsPFUser;
+
 
 @end

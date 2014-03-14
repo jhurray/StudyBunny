@@ -11,6 +11,7 @@
 #import "MyCoursesViewController.h"
 #import "MapViewController.h"
 #import "MatchPickerViewController.h"
+#import "MyMatchesViewController.h"
 
 @interface MasterViewController ()
 
@@ -54,7 +55,7 @@
     self.navigationItem.rightBarButtonItem = settingsBarButton;
     
     UIButton *myCoursesBtn = [[UIButton alloc] initWithFrame:BARBUTTONFRAME];
-    UIImage *menuImg = [self changeImage:[UIImage imageNamed:@"mine.png"] toColor:[UIColor whiteColor]];
+    UIImage *menuImg = [self changeImage:[UIImage imageNamed:@"hollowMenu.png"] toColor:[UIColor whiteColor]];
     [myCoursesBtn setImage:menuImg forState:UIControlStateNormal];
     [myCoursesBtn addTarget:self action:@selector(seeMyCourses) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *myCoursesBarButton = [[UIBarButtonItem alloc] initWithCustomView:myCoursesBtn];
@@ -96,10 +97,10 @@
     [findMatches addTarget:self action:@selector(findMatches) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:findMatches];
     
-    SBButton *myCourses = [[SBButton alloc] initWithFrame:CGRectMake(60, 3*DEVICEHEIGHT/5+2*buttonOffset, 200, buttonHeight)];
-    [myCourses setTitle:@"My Matches" forState:UIControlStateNormal];
-    [myCourses addTarget:self action:@selector(seeMyCourses) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:myCourses];
+    SBButton *myMatches = [[SBButton alloc] initWithFrame:CGRectMake(60, 3*DEVICEHEIGHT/5+2*buttonOffset, 200, buttonHeight)];
+    [myMatches setTitle:@"My Matches" forState:UIControlStateNormal];
+    [myMatches addTarget:self action:@selector(seeMyMatches) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:myMatches];
     
     FBRequest *request = [FBRequest requestForMe];
     
@@ -127,6 +128,11 @@
 -(void)studyNow
 {
     [self.navigationController pushViewController:[[MapViewController alloc] initWithNibName:nil bundle:nil] animated:NO];
+}
+
+-(void)seeMyMatches
+{
+    [self.navigationController pushViewController:[[MyMatchesViewController alloc] initWithNibName:nil bundle:nil] animated:NO];
 }
 
 -(void)seeMyCourses

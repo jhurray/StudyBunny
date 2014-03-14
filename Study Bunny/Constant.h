@@ -33,12 +33,14 @@
 #define CELLHEIGHT 60
 
 #define MATCHCELLHEIGHT 100
+#define MYMATCHCELLHEIGHT 130
+
 
 // COLORS / FONTS
 
 #define MAINCOLOR [UIColor whiteColor]
 #define SECONDARYCOLOR [UIColor colorWithRed:52.0/255.0 green:73.0/255.0 blue:94.0/255.0 alpha:0.8]
-#define TERTIARYCOLOR [UIColor colorWithRed:107.0/255.0 green:185.0/255.0 blue:240.0/255.0 alpha:1.0]
+#define TERTIARYCOLOR [UIColor colorWithRed:52.0/255.0 green:152.0/255.0 blue:219.0/255.0 alpha:1.0]
 #define GRAYTEXTCOLOR [UIColor grayColor]
 #define LIGHTGRAYTEXTCOLOR [UIColor lightGrayColor]
 #define DELETECOLOR [UIColor colorWithRed:201.0/255.0 green:70.0/255.0 blue:59.0/255.0 alpha:1.0]
