@@ -37,6 +37,9 @@
                                                           [UIFont fontWithName:FONT size:18.0f],NSFontAttributeName,
                                                           nil] forState:UIControlStateNormal];
     
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshBtnPressed)];
+    [self.navigationItem.rightBarButtonItem setTintColor:MAINCOLOR];
     //title view
     titleView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, NAVBARHEIGHT)];
     [titleView setBackgroundColor:[UIColor clearColor]];
@@ -84,22 +87,31 @@
 
 // ------------------------------------- SELECTOR FUNCS -----------------------------------------------------//
 
+-(void)refreshBtnPressed
+{
+    [matcher getMatches];
+    [MBProgressHUD showHUDAddedTo:self.view withText:@"Loading Courses"];
+}
+
 -(void)fetchMatchedUsers
 {
     PFQuery *q = [PFUser query];
     [q whereKey:@"objectId" containedIn:matcher.userMatches];
+    NSLog(@"\nuser matches count is %@\n", matcher.userMatches);
     
     [q whereKey:@"location"
        nearGeoPoint:[PFGeoPoint geoPointWithLatitude:[[LocationGetter sharedInstance] getLatitude]
                                            longitude:[[LocationGetter sharedInstance]getLongitude]]
-   withinKilometers:20];
+   withinKilometers:40];
+    [q whereKey:@"online" equalTo:[NSNumber numberWithBool:TRUE]];
     
     [q findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (error) {
             NSLog(@"Error: failed fetching matched users %@\n", error.localizedDescription);
             return;
         }
-        NSLog(@"\nuser objects count is %lu\n", (unsigned long)objects.count);
+        
+        [map removeAnnotations:map.annotations];
         for (PFUser *u in objects)
         {
             if ([matcher.madeMatches containsObject:u.objectId] ) {
@@ -110,7 +122,7 @@
             [matchedUsers addObject:mu];
             MKPointAnnotation *ann = [[MKPointAnnotation alloc] init];
             [ann setCoordinate:mu.coord];
-            [ann setTitle:mu.name];  
+            [ann setTitle:mu.name];
             [ann setSubtitle:[mu getConcatenatedCourses]];
             [map addAnnotation:ann];
         }

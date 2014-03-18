@@ -49,7 +49,7 @@
         [matchPending setAlpha:0];
         [matchPending setText:@"Study Request Pending..."];
         [matchPending setFont:[UIFont fontWithName:FONT size:16]];
-        [matchPending setTextColor:TERTIARYCOLOR];
+        [matchPending setTextColor:LIGHTBLUECOLOR];
         [matchPending setTextAlignment:NSTextAlignmentCenter];
         
         //matches config

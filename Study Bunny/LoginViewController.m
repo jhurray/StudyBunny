@@ -11,7 +11,7 @@
 #import "MBProgressHUD.h"
 
 #define PHONEPROMPT @"Please enter your phone number..."
-#define EMAILPROMPT @"Please enter your email address..."
+#define EMAILPROMPT @"  Please enter your email address..."
 
 @interface LoginViewController ()
 
@@ -119,7 +119,7 @@
             } else {
                 NSLog(@"Uh oh. An error occurred: \n\n%@", error);
             }
-        } else if (!user.isNew) {
+        } else if (user.isNew) {
             NSLog(@"User with facebook signed up and logged in!");
             
             //adding a column to user table
@@ -271,11 +271,7 @@
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if([textField.text isEqualToString:PHONEPROMPT] || [textField.text isEqualToString:@""] ){
-        return NO;
-    }
-    [textField resignFirstResponder];
-    return YES;
+    return NO;
 }
 
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string

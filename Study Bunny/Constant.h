@@ -44,6 +44,8 @@
 #define GRAYTEXTCOLOR [UIColor grayColor]
 #define LIGHTGRAYTEXTCOLOR [UIColor lightGrayColor]
 #define DELETECOLOR [UIColor colorWithRed:201.0/255.0 green:70.0/255.0 blue:59.0/255.0 alpha:1.0]
+#define LIGHTBLUECOLOR [UIColor colorWithRed:25.0/255.0 green:181.0/255.0 blue:254.0/255.0 alpha:1.0]
+
 
 #define FONT @"AppleSDGothicNeo-Light"
 
